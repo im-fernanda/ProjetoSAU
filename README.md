@@ -23,9 +23,9 @@
 
 3. Crie um arquivo application.propertier na raiz do projeto e insira suas credencias. Utilize como exemplo:
   ```yaml
-  spring.datasource.url=jdbc:postgresql://localhost:5432/eletro_db
-  spring.datasource.username=postgres
-  spring.datasource.password=2005
+  spring.datasource.url=jdbc:postgresql://localhost:5432/nome-do-seu-banco-de-dados
+  spring.datasource.username=usuario-do-seu-postgres
+  spring.datasource.password=senha-do-seu-postgres
   
   spring.datasource.driver-class-name=org.postgresql.Driver
   spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
