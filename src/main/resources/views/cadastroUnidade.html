@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Unidade</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Unidade</h1>
+    <form action="/cadastrar-unidade" method="post">
+        <fieldset>
+            <legend>Informações da Unidade</legend>
+            <label for="unidade-nome">Nome</label>
+            <input type="text" id="unidade-nome" name="unidade-nome" required>
+            <label for="unidade-comarca">Selecione a Comarca</label>
+            <select id="unidade-comarca" name="unidade-comarca" required>
+                <option value="">Selecione...</option>
+                <!-- As opções serão preenchidas dinamicamente via JavaScript -->
+            </select>
+        </fieldset>
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+</body>
+</html>

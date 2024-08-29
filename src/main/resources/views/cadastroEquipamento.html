@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Equipamento</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <script src="../static/scripts.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Equipamento</h1>
+    <form action="/cadastrar-equipamento" method="post">
+        <fieldset>
+            <legend>Informações do Equipamento</legend>
+
+            <label for="tombo">Tombo</label>
+            <input type="text" id="tombo" name="tombo" required>
+
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" name="modelo" required>
+
+            <label for="regional">Regional</label>
+            <select id="regional" name="regional" required>
+                <option value="">Selecione...</option>
+                <!-- As opções serão preenchidas dinamicamente pelo script -->
+            </select>
+
+            <label for="comarca">Comarca</label>
+            <select id="comarca" name="comarca" required>
+                <option value="">Selecione...</option>
+                <!-- As opções serão preenchidas dinamicamente pelo script -->
+            </select>
+
+            <label for="unidade">Unidade</label>
+            <select id="unidade" name="unidade" required>
+                <option value="">Selecione...</option>
+                <!-- As opções serão preenchidas dinamicamente pelo script -->
+            </select>
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="4"></textarea>
+
+        </fieldset>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+</body>
+</html>
