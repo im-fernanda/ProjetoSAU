@@ -69,4 +69,11 @@ public class ComarcaController {
         // Se o valor do botão não for esperado, retornar para a página de cadastro
         return new ModelAndView("redirect:/cadastroComarca");
     }
+
+    @GetMapping("/comarcasPorRegional/{regionalId}")
+    @ResponseBody
+    public List<Comarca> getComarcasPorRegional(@PathVariable Long regionalId) {
+        return comarcaService.findByRegionalId(regionalId);
+    }
+
 }

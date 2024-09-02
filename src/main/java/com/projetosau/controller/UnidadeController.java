@@ -63,6 +63,7 @@ public class UnidadeController {
 
         try {
             unidadeService.create(unidade);
+
             if ("save".equals(action)) {
                 return new ModelAndView("redirect:/cadastroUnidade?success=true");
             } else if ("viewAll".equals(action)) {

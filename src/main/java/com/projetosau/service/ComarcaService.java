@@ -32,4 +32,8 @@ public class ComarcaService {
     public Optional<Comarca> findById(String id) {
         return repository.findById(id);
     }
+
+    public List<Comarca> findByRegionalId(Long regionalId) {
+        return repository.findByRegionalId(regionalId);
+    }
 }

@@ -5,41 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Unidade</title>
     <link rel="stylesheet" href="/styles.css">
+    <script>
+        // Função para carregar as comarcas com base no regional selecionado
+        function carregarComarcas() {
+            const regionalId = document.getElementById('comarca-regional').value;
+            const comarcaSelect = document.getElementById('comarca');
+
+            // Limpa as opções anteriores
+            comarcaSelect.innerHTML = '<option value="">Selecione...</option>';
+
+            if (regionalId) {
+                // Cria a URL para a requisição
+                const url = `/comarcasPorRegional/${regionalId}`;
+
+                // Faz a requisição para obter as comarcas
+                fetch(url)
+                    .then(response => response.json())
+                    .then(comarcas => {
+                        comarcas.forEach(comarca => {
+                            const option = document.createElement('option');
+                            option.value = comarca.id;
+                            option.textContent = comarca.nome;
+                            comarcaSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Erro ao carregar comarcas:', error));
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container">
     <h1>Cadastro de Unidade</h1>
 
-    <!-- Mensagem de alerta, se houver -->
-    <div th:if="${msg}" class="alert alert-success" role="alert" th:text="${msg}"></div>
-
-    <form id="unidadeForm" th:action="@{/processSaveUnidade}" method="post" th:object="${unidade}">
+    <form action="#" method="post" th:action="@{/processSaveUnidade}" th:object="${unidade}">
         <fieldset>
-            <legend>Informações da Unidade</legend>
 
-            <label for="unidade-regional">Selecione o Regional</label>
-            <select id="unidade-regional" name="regional.id" required>
+            <label for="comarca-regional">Selecione o Regional</label>
+            <select id="comarca-regional" name="regional" required onchange="carregarComarcas()">
                 <option value="">Selecione...</option>
                 <option th:each="regional : ${regionais}" th:value="${regional.id}" th:text="${regional.nome}"></option>
             </select>
 
-            <label for="unidade-comarca">Selecione a Comarca</label>
-            <select id="unidade-comarca" name="comarca.id" required>
-                <option value="">Selecione...</option>
-                <option th:each="comarca : ${comarcas}" th:value="${comarca.id}" th:text="${comarca.nome}"></option>
-            </select>
+            <div>
+                <label for="comarca">Comarca:</label>
+                <select id="comarca" name="comarca">
+                    <option value="">Selecione...</option>
+                    <!-- As opções serão carregadas dinamicamente pelo JavaScript -->
+                </select>
+            </div>
 
-            <label for="unidade-nome">Nome</label>
-            <input type="text" id="unidade-nome" name="nome" th:value="${unidade.nome}" required>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" th:value="${unidade.nome}" required>
 
+            <!-- Botões para ações -->
+            <button type="submit" name="action" value="save">Salvar</button>
+            <button type="submit" name="action" value="viewAll">Salvar e Ver Todos</button>
 
         </fieldset>
-
-        <!-- Botão para cadastrar e permanecer na mesma página -->
-        <button type="submit" name="action" value="save">Salvar e permanecer</button>
-
-        <!-- Botão para cadastrar e ir para a página de listagem de unidades -->
-        <button type="submit" name="action" value="viewAll">Salvar e ver todos</button>
     </form>
 </div>
 </body>

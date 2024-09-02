@@ -33,6 +33,11 @@ public class UnidadeService {
         if (repository.findById(unidade.getId()).isPresent()) {
             throw new IllegalArgumentException("A unidade já existe.");
         }
+        // Verifica se a comarca associada tem um ID válido
+        if (unidade.getComarca() != null && unidade.getComarca().getId() == null) {
+            throw new IllegalArgumentException("A comarca associada deve ter um ID válido.");
+        }
+
         return repository.save(unidade);
     }
 
