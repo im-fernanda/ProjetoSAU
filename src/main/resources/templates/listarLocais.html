@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Locais</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Lista de Locais</h1>
+
+    <!-- Mensagem de sucesso, se houver -->
+    <div th:if="${msg}" class="alert alert-success" role="alert" th:text="${msg}"></div>
+
+    <fieldset>
+        <table>
+            <thead>
+            <tr>
+                <th>Unidade</th>
+                <th>Comarca</th>
+                <th>Regional</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="unidade : ${unidades}">
+                <td th:text="${unidade.nome}">Nome da Unidade</td>
+                <td th:text="${unidade.comarca.nome}">Nome da Comarca</td>
+                <td th:text="${unidade.comarca.regional.nome}">Nome do Regional</td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <a href="/cadastroUnidade" class="btn">Cadastrar Unidade</a>
+</div>
+</body>
+</html>

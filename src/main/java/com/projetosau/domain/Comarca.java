@@ -12,14 +12,14 @@ import lombok.*;
 public class Comarca {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Size(min = 2, message = "Houve um erro no cadastro do campo nome.")
     @NotBlank(message = "Nome é obrigatório")
     String nome;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "unidade_id")
-    private Unidade unidade;
+    @JoinColumn(name = "regional_id")
+    private Regional regional;
 
 }

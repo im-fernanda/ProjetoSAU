@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Regional</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Regional</h1>
+
+    <!-- Mensagem de alerta, se houver -->
+    <div th:if="${msg}" class="alert alert-warning" role="alert" th:text="${msg}"></div>
+
+    <form id="regionalForm" th:action="@{/processSaveRegional}" method="post" th:object="${regional}">
+        <fieldset>
+            <legend>Informações da Regional</legend>
+            <label for="regional-nome">Nome</label>
+            <input type="text" id="regional-nome" name="nome" th:value="${regional.nome}" required>
+        </fieldset>
+
+        <!-- Botão para cadastrar e permanecer na mesma página -->
+        <button type="submit" name="action" value="save">Cadastrar e permanecer</button>
+
+        <!-- Botão para cadastrar e ir para a página de cadastro de comarca -->
+        <button type="submit" name="action" value="goToComarca">Cadastrar e ir para Comarcas</button>
+    </form>
+</div>
+</body>
+</html>

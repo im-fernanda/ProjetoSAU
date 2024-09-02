@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class Equipamento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @NotNull(message = "O tombo é obrigatório")
     @Column(unique = true, nullable = false)

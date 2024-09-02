@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UnidadeRepository extends JpaRepository<Unidade, String> {
+public interface UnidadeRepository extends JpaRepository<Unidade, Long> {
+    boolean existsByNome(String nome);
 
 }
 

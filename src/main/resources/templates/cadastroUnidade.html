@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Unidade</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Unidade</h1>
+
+    <!-- Mensagem de alerta, se houver -->
+    <div th:if="${msg}" class="alert alert-success" role="alert" th:text="${msg}"></div>
+
+    <form id="unidadeForm" th:action="@{/processSaveUnidade}" method="post" th:object="${unidade}">
+        <fieldset>
+            <legend>Informações da Unidade</legend>
+
+            <label for="unidade-regional">Selecione o Regional</label>
+            <select id="unidade-regional" name="regional.id" required>
+                <option value="">Selecione...</option>
+                <option th:each="regional : ${regionais}" th:value="${regional.id}" th:text="${regional.nome}"></option>
+            </select>
+
+            <label for="unidade-comarca">Selecione a Comarca</label>
+            <select id="unidade-comarca" name="comarca.id" required>
+                <option value="">Selecione...</option>
+                <option th:each="comarca : ${comarcas}" th:value="${comarca.id}" th:text="${comarca.nome}"></option>
+            </select>
+
+            <label for="unidade-nome">Nome</label>
+            <input type="text" id="unidade-nome" name="nome" th:value="${unidade.nome}" required>
+
+
+        </fieldset>
+
+        <!-- Botão para cadastrar e permanecer na mesma página -->
+        <button type="submit" name="action" value="save">Salvar e permanecer</button>
+
+        <!-- Botão para cadastrar e ir para a página de listagem de unidades -->
+        <button type="submit" name="action" value="viewAll">Salvar e ver todos</button>
+    </form>
+</div>
+</body>
+</html>

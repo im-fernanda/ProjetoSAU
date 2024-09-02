@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Regional {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Size(min = 2, message = "Houve um erro no cadastro do campo nome.")
     @NotBlank(message = "Nome é obrigatório")

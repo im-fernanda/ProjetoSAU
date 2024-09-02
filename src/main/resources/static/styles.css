@@ -17,22 +17,26 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Fieldset */
 fieldset {
     border: 1px solid #ddd;
     padding: 15px;
     margin-bottom: 15px;
 }
 
+/* Legend */
 legend {
     font-weight: bold;
     padding: 0 10px;
 }
 
+/* Label */
 label {
     display: block;
     margin-bottom: 5px;
 }
 
+/* Input, select, and textarea */
 input[type="text"], select, textarea {
     width: 100%;
     padding: 8px;
@@ -41,6 +45,7 @@ input[type="text"], select, textarea {
     border-radius: 4px;
 }
 
+/* Button */
 button {
     background-color: #007bff;
     color: #fff;
@@ -57,4 +62,37 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Mensagem de sucesso */
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.alert-warning {
+    background-color: #ffc107;
+    color: #212529;
 }

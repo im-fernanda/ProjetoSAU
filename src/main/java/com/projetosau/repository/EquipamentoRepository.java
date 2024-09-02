@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface EquipamentoRepository extends JpaRepository<Equipamento, String> {
-    List<Equipamento> findByIsDeletedNull();
-    boolean existsByTombo(String tombo);
+public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> {
+    boolean existsByTombo(Integer tombo);
 }

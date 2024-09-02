@@ -17,11 +17,11 @@ public class EquipamentoService {
         this.repository = repository;
     }
 
-    public Optional<Equipamento> findById(String id) {
+    public Optional<Equipamento> findById(Long id) {
         return repository.findById(id);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
@@ -30,13 +30,13 @@ public class EquipamentoService {
     }
 
     public Equipamento create(Equipamento equipamento) {
-        if (repository.existsByTombo(String.valueOf(equipamento.getTombo()))) {
+        if (repository.existsByTombo(equipamento.getTombo())) {
             throw new IllegalArgumentException("O tombo já existe. Escolha um tombo diferente.");
         }
         return repository.save(equipamento);
     }
 
     public List<Equipamento> findAll() {
-        return repository.findByIsDeletedNull();
+        return repository.findAll();
     }
 }
