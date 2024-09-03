@@ -38,10 +38,33 @@
 
 <h2 id="routes">📍 API Endpoints</h2>
 ​
+<h3>Equipamentos</h3>
 
-| route               | description                                          
+| rota             | descrição                                       
 |----------------------|-----------------------------------------------------
-| <kbd>GET /listarEquipamentos</kbd>     | acesso à homepage do site com acesso à listagem dos equipamentos
-| <kbd>GET /listarLocais</kbd>     | acesso à listagem dos locais
+| <kbd> GET /listarEquipamentos</kbd>     | acesso à homepage do site com acesso à listagem dos equipamentos --- NOT READY
+| <kbd> POST /cadastrarEquipamento</kbd> | acesso à cadastro de equipamento (necessário associar a um local) --- NOT READY
+| <kbd> POST /editarEquipamento</kbd> | acesso à página de edição dos detalhes de um equipamento já cadastrado (NÃO utilizar para transferência de locais) --- NOT READY
+| <kbd> POST /cadastrarTransferencia</kbd> | acesso à registro de transfêrencia de equipamento para outro local  --- NOT READY
+| <kbd> GET /listarPorTombo</kbd> | acesso aos detalhes do equipamento (detalhes e histórico de transferência) --- NOT READY
+| <kbd> GET /listarPorNome</kbd> | acesso à listagem de equipamentos que possuem o mesmo nome (ex.: computador, impressora) --- NOT READY
+| <kbd> GET /listarPorLocal</kbd> | acesso à listagem de equipamentos disponíveis em um local especifico --- NOT READY
+
+
+<h3>Locais</h3>
+
+| rota             | descrição                                       
+|----------------------|-----------------------------------------------------
+| <kbd> GET /listarLocais</kbd>     | acesso à listagem de todos os locais (detalhes das unidades) --- NOT READY
+| <kbd> POST /cadastrarRegional</kbd> | acesso à cadastro de regionais
+| <kbd> POST /cadastrarComarca</kbd> | acesso à cadastro de comarcas (necessário associar a um regional)
+| <kbd> POST /cadastrarUnidade</kbd> | acesso à cadastro de unidades (necessário associar a uma comarca)
+| <kbd> PATCH /editarRegional</kbd> | acesso à página de edição do NOME do regional
+| <kbd> PATCH /editarComarca</kbd> | acesso à página de edição do NOME da comarda
+| <kbd> PATCH /editarUnidade</kbd> | acesso à página de edição do NOME da unidade 
+| <kbd> DELETE /deletarRegional</kbd> | deletar regional, comarcas e unidades a ela associada
+| <kbd> DELETE /deletarComarca</kbd> | deletar comarcas e unidades a ela associada
+| <kbd> DELETE /deletarUnidade</kbd> | deletar unidade
+
 
 
