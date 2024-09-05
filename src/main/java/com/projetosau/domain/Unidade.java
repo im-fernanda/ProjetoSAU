@@ -20,8 +20,8 @@ public class Unidade {
     @NotBlank(message = "Nome é obrigatório")
     String nome;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "comarca_id")
+    @ManyToOne
+    @JoinColumn(name = "comarca_id", nullable = false)
     private Comarca comarca;
 
 }

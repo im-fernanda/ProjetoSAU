@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "regional_tbl")
@@ -21,7 +24,7 @@ public class Regional {
     @NotBlank(message = "Nome é obrigatório")
     String nome;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "comarca_id")
-    private Comarca comarca;
+    @OneToMany(mappedBy = "regional", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comarca> comarcas = new ArrayList<>();
+
 }

@@ -108,7 +108,7 @@ public class UnidadeController {
             model.addAttribute("msg", "Erro ao deletar unidade: " + e.getMessage());
             model.addAttribute("alertClass", "alert-danger");
         }
-        return "listarLocais";
+        return "redirect:/listarLocais?msg=Remoção realizada com sucesso";
     }
 
 
@@ -143,7 +143,10 @@ public class UnidadeController {
         if (unidadeToUpdate.isPresent()) {
             unidadeService.update(unidade);
         }
-        return new ModelAndView("redirect:/listarLocais");
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/listarLocais?success=true");
+        modelAndView.addObject("unidade", unidadeService.findAll());
+        return modelAndView;
     }
 
 
