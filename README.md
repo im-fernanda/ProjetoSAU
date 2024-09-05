@@ -55,7 +55,7 @@
 
 | rota             | descrição                                       
 |----------------------|-----------------------------------------------------
-| <kbd> GET /listarLocais</kbd>     | acesso à listagem de todos os locais (detalhes das unidades) --- NOT READY
+| <kbd> GET /listarLocais</kbd>     | acesso à listagem de todos os locais (detalhes das unidades)
 | <kbd> POST /cadastrarRegional</kbd> | acesso à cadastro de regionais
 | <kbd> POST /cadastrarComarca</kbd> | acesso à cadastro de comarcas (necessário associar a um regional)
 | <kbd> POST /cadastrarUnidade</kbd> | acesso à cadastro de unidades (necessário associar a uma comarca)
