@@ -76,4 +76,4 @@ public class ComarcaController {
         return comarcaService.findByRegionalId(regionalId);
     }
 
-}
+} 

@@ -6,6 +6,8 @@ import com.projetosau.domain.Unidade;
 import com.projetosau.repository.RegionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,4 +36,5 @@ public class RegionalService {
         }
         return repository.save(regional);
     }
+
 }

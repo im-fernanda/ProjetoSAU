@@ -21,16 +21,9 @@ public class UnidadeService {
         return repository.findById(id);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
-    public Unidade update(Unidade unidade) {
-        return repository.saveAndFlush(unidade);
-    }
 
     public Unidade create(Unidade unidade) {
-        if (repository.findById(unidade.getId()).isPresent()) {
+        if (repository.existsByNome(unidade.getNome())) {
             throw new IllegalArgumentException("A unidade já existe.");
         }
         // Verifica se a comarca associada tem um ID válido
@@ -39,6 +32,19 @@ public class UnidadeService {
         }
 
         return repository.save(unidade);
+    }
+
+    public void delete(Long id) {
+        Optional<Unidade> unidade = repository.findById(id);
+        if (unidade.isPresent()) {
+            repository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Unidade não encontrada com o ID: " + id);
+        }
+    }
+
+    public Unidade update(Unidade unidade) {
+        return repository.saveAndFlush(unidade);
     }
 
     public List<Unidade> findAll() {

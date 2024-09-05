@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Unidade</title>
+    <title>Edição de Unidade</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="/js/carregarComarcas.js" defer></script>
 
 </head>
 <body>
 <div class="container">
-    <h1>Cadastro de Unidade</h1>
+    <h1>Edição de Unidade</h1>
 
-    <form action="#" method="post" th:action="@{/processSaveUnidade}" th:object="${unidade}">
+    <form method="post" th:action="@{/processUpdateUnidade}" th:object="${unidade}">
         <fieldset>
-            <label for="comarca-regional">Selecione o Regional</label>
-            <select id="comarca-regional" name="regional" required>
+            <input type="hidden" name="id"  th:field="*{id}"/>
+            <label for="comarca-regional">Regional</label>
+            <select id="comarca-regional" name="regional" required onchange="carregarComarcas()">
                 <option value="">Selecione...</option>
                 <option th:each="regional : ${regionais}" th:value="${regional.id}" th:text="${regional.nome}"></option>
             </select>
@@ -28,14 +29,14 @@
                 </select>
             </div>
 
-            <label for="nome">Nome</label>
+            <label for="nome">Nome da Unidade</label>
             <input type="text" id="nome" name="nome" th:value="${unidade.nome}" required>
 
-            <!-- Botões para ações -->
-            <button type="submit" name="action" value="save">Salvar</button>
-            <button type="submit" name="action" value="viewAll">Salvar e Ver Todos</button>
+            <button type="submit" name="action">Salvar</button>
+
         </fieldset>
     </form>
 </div>
+
 </body>
 </html>
