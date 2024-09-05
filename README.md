@@ -59,11 +59,7 @@
 | <kbd> POST /cadastrarRegional</kbd> | acesso à cadastro de regionais
 | <kbd> POST /cadastrarComarca</kbd> | acesso à cadastro de comarcas (necessário associar a um regional)
 | <kbd> POST /cadastrarUnidade</kbd> | acesso à cadastro de unidades (necessário associar a uma comarca)
-| <kbd> PATCH /editarRegional</kbd> | acesso à página de edição do NOME do regional
-| <kbd> PATCH /editarComarca</kbd> | acesso à página de edição do NOME da comarda
-| <kbd> PATCH /editarUnidade</kbd> | acesso à página de edição do NOME da unidade 
-| <kbd> DELETE /deletarRegional</kbd> | deletar regional, comarcas e unidades a ela associada
-| <kbd> DELETE /deletarComarca</kbd> | deletar comarcas e unidades a ela associada
+| <kbd> PATCH /editarUnidade</kbd> | acesso à página de edição do NOME da unidade
 | <kbd> DELETE /deletarUnidade</kbd> | deletar unidade
 
 
