@@ -49,7 +49,7 @@
 | <kbd> POST /cadastrarComarca</kbd> | acesso à cadastro de comarcas (necessário associar a um regional)
 | <kbd> POST /cadastrarUnidade</kbd> | acesso à cadastro de unidades (necessário associar a uma comarca)
 | <kbd> PATCH /editarUnidade</kbd> | acesso à página de edição do NOME da unidade
-| <kbd> DELETE /deletarUnidade</kbd> | deletar unidade
+| <kbd> DELETE /deletarUnidade</kbd> | deletar unidade permanentemente
 ​
 <h3>Equipamentos</h3>
 
@@ -58,6 +58,7 @@
 | <kbd> GET /listarEquipamentos</kbd>     | acesso à homepage do site com acesso à listagem dos equipamentos
 | <kbd> POST /cadastrarEquipamento</kbd> | acesso à cadastro de equipamento (necessário associar a um local)
 | <kbd> POST /editarEquipamento</kbd> | acesso à página de edição dos detalhes de um equipamento já cadastrado (NÃO utilizar para transferência de locais)
+| <kbd> POST /deletarEquipamento</kbd> | deletar permanentemente o equipamento do banco de dados
 | <kbd> POST /cadastrarTransferencia</kbd> | acesso à registro de transfêrencia de equipamento para outro local  --- NOT READY
 | <kbd> GET /listarPorTombo</kbd> | acesso aos detalhes do equipamento (detalhes e histórico de transferência) --- NOT READY
 | <kbd> GET /listarPorNome</kbd> | acesso à listagem de equipamentos que possuem o mesmo nome (ex.: computador, impressora) --- NOT READY
