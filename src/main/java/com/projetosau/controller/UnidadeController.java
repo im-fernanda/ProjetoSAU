@@ -39,7 +39,7 @@ public class UnidadeController {
 
         Unidade unidade = new Unidade();
 
-        // Carregar todos os regionais
+        // Carrega todos os regionais
         List<Regional> regionais = regionalService.findAll();
         model.addAttribute("regionais", regionais);
 
@@ -153,19 +153,23 @@ public class UnidadeController {
 
     @PostMapping("/processUpdateUnidade")
     public ModelAndView processUpdateUnidade(
-            @ModelAttribute @Valid Unidade unidade, BindingResult result,
+            @RequestParam("id") Long id,
+            @RequestParam("nome") String nome,
             @RequestParam("action") String action) {
 
-        // Pega o id que foi passado por parâmetro na URL
-        Optional<Unidade> unidadeToUpdate = unidadeService.findById(unidade.getId());
+        // Verifica se a unidade existe
+        Optional<Unidade> unidadeToUpdate = unidadeService.findById(id);
         if (unidadeToUpdate.isPresent()) {
+            Unidade unidade = unidadeToUpdate.get();
+            unidade.setNome(nome); // Atualiza apenas o nome
             unidadeService.update(unidade);
         }
 
+        // Redireciona para a lista de unidades com uma mensagem de sucesso
         ModelAndView modelAndView = new ModelAndView("redirect:/listarLocais?success=true");
-        modelAndView.addObject("unidade", unidadeService.findAll());
         return modelAndView;
     }
+
 
 
     @GetMapping("/unidadesPorComarca")

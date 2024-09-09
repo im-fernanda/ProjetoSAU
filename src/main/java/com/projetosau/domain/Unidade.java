@@ -39,12 +39,11 @@ public class Unidade implements Serializable {
     @OneToMany(mappedBy = "unidade", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Equipamento> equipamento;
 
-    // Getter for 'regional'
+
     public Regional getRegional() {
         return this.comarca != null ? this.comarca.getRegional() : null;
     }
 
-    // Setter for 'regional'
     public void setRegional(Regional regional) {
         if (this.comarca != null) {
             this.comarca.setRegional(regional);

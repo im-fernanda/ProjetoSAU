@@ -10,37 +10,14 @@
 <div class="container">
     <h1>Edição de Unidade</h1>
 
-    <form method="post" th:action="@{/processUpdateUnidade}" th:object="${unidade}">
-        <fieldset>
-            <input type="hidden" name="id" th:field="*{id}"/>
+    <form method="post" th:action="@{/processUpdateUnidade}">
+        <input type="hidden" name="id" th:value="${unidade.id}"/>
 
-            <label for="comarca-regional">Regional</label>
-            <select id="comarca-regional" name="regional" required>
-                <option value="">Selecione...</option>
-                <option th:each="regional : ${regionais}"
-                        th:value="${regional.id}"
-                        th:text="${regional.nome}"
-                        th:selected="${unidade.regional.id == regional.id ? 'selected' : ''}">
-                </option>
-            </select>
+        <label for="nome">Novo nome da Unidade:</label>
+        <input type="text" id="nome" name="nome" th:value="${unidade.nome}" required>
 
-            <div>
-                <label for="comarca">Comarca:</label>
-                <select id="comarca" name="comarca">
-                    <option value="">Selecione...</option>
-                    <option th:each="comarca : ${comarcasPorRegional}"
-                            th:value="${comarca.id}"
-                            th:text="${comarca.nome}"
-                            th:selected="${unidade.comarca.id == comarca.id ? 'selected' : ''}">
-                    </option>
-                </select>
-            </div>
-
-            <label for="nome">Nome da Unidade</label>
-            <input type="text" id="nome" name="nome" th:value="${unidade.nome}" required>
-
-            <button type="submit" name="action">Salvar</button>
-        </fieldset>
+        <!-- Botões para ações -->
+        <button type="submit" name="action" value="goToUnidades">Salvar</button>
     </form>
 </div>
 </body>

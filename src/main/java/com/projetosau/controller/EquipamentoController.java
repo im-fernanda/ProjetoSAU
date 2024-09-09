@@ -61,7 +61,7 @@ public class EquipamentoController {
         List<Regional> regionais = regionalService.findAll();
         model.addAttribute("regionais", regionais);
 
-        // Se regionalId for fornecido, carregar comarcas associadas e filtrar regionais
+        // Se regionalId for fornecido, carregar comarcas associadas e filtra os regionais
         if (regionalId != null) {
             // Carrega as comarcas associadas ao regionalId
             List<Comarca> comarcas = comarcaService.findByRegional(regionalId);
@@ -108,7 +108,7 @@ public class EquipamentoController {
                 // Redireciona para a mesma página com uma mensagem de sucesso
                 return new ModelAndView("redirect:/cadastroEquipamento?success=true");
             } else if ("goToEquipamentos".equals(action)) {
-                // Redireciona para a página de cadastro de unidades
+                // Redireciona para a página de listagem dos equipamentos
                 return new ModelAndView("redirect:/listarEquipamentos");
             }
         } catch (IllegalArgumentException e) {
@@ -135,7 +135,6 @@ public class EquipamentoController {
             model.addAttribute("regionais", regionais);
             model.addAttribute("comarcas", comarcas);
             model.addAttribute("unidades", unidades);
-
 
             // Adiciona uma lista de comarcas associadas para a regional selecionada
             model.addAttribute("comarcasPorRegional", comarcas.stream()
@@ -189,7 +188,5 @@ public class EquipamentoController {
         }
         return "redirect:/listarEquipamentos?msg=Remoção realizada com sucesso";
     }
-
-
 
 }
