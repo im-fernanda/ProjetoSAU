@@ -139,7 +139,7 @@ public class UnidadeController {
             model.addAttribute("regionais", regionais);
             model.addAttribute("comarcas", comarcas);
 
-            // Adicione uma lista de comarcas associadas para a regional selecionada
+            // Adiciona uma lista de comarcas associadas para a regional selecionada
             model.addAttribute("comarcasPorRegional", comarcas.stream()
                     .filter(c -> c.getRegional().getId().equals(unidade.getRegional().getId()))
                     .collect(Collectors.toList()));

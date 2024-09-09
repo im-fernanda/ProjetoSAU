@@ -37,4 +37,8 @@ public class Regional implements Serializable {
     @OneToMany(mappedBy = "regional", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Comarca> comarcas = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Regional [id=" + id + ", nome=" + nome + "]";
+    }
 }

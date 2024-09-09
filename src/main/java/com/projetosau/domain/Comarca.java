@@ -40,4 +40,9 @@ public class Comarca implements Serializable {
     @JsonManagedReference
     private Set<Unidade> unidades = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Comarca [id=" + id + ", nome=" + nome + "]";
+    }
+
 }

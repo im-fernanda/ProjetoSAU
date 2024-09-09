@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface ComarcaRepository extends JpaRepository<Comarca, Long> {
-    boolean existsByNome(String nome);
 
+    boolean existsByNome(String nome);
     List<Comarca> findByRegional(Regional regional);
 }

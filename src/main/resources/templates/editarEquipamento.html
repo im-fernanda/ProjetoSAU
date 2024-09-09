@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edição de Equipamento</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edição de Equipamento</h1>
+
+    <form method="post" th:action="@{/processUpdateEquipamento}" th:object="${equipamento}">
+        <fieldset>
+            <input type="hidden" name="id" th:field="*{id}"/>
+
+            <label for="tombo">Tombo</label>
+            <input type="text" id="tombo" name="tombo" th:field="*{tombo}" required>
+
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" th:field="*{nome}" required>
+
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" name="modelo" th:field="*{modelo}" required>
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" th:field="*{descricao}"></textarea>
+
+            <label for="equipamento-regional">Regional</label>
+            <select id="equipamento-regional" name="equipamento-regional" th:field="*{unidade.regional}" onchange="loadComarcas()" required>
+                <option value="">Selecione...</option>
+                <option th:each="regional : ${regionais}"
+                        th:value="${regional.id}"
+                        th:text="${regional.nome}"
+                        th:selected="${equipamento.unidade?.regional?.id == regional.id ? 'selected' : ''}">
+                </option>
+            </select>
+
+            <label for="equipamento-comarca">Comarca:</label>
+            <select id="equipamento-comarca" name="equipamento-comarca" th:field="*{unidade.comarca}" onchange="loadUnidades()" required>
+                <option value="">Selecione...</option>
+                <option th:each="comarca : ${comarcasPorRegional}"
+                        th:value="${comarca.id}"
+                        th:text="${comarca.nome}"
+                        th:selected="${equipamento.unidade?.comarca?.id == comarca.id ? 'selected' : ''}">
+                </option>
+            </select>
+
+            <label for="equipamento-unidade">Unidade:</label>
+            <select id="equipamento-unidade" name="equipamento-unidade" th:field="*{unidade.id}" required>
+                <option value="">Selecione...</option>
+                <option th:each="unidade : ${unidadesPorComarca}"
+                        th:value="${unidade.id}"
+                        th:text="${unidade.nome}"
+                        th:selected="${equipamento.unidade?.id == unidade.id ? 'selected' : ''}">
+                </option>
+            </select>
+
+            <button type="submit" name="action" value="save">Salvar</button>
+            <button type="submit" name="action" value="goToEquipamentos">Salvar e Ver Todos</button>
+        </fieldset>
+    </form>
+</div>
+
+<script src="/js/cadastroEquipamento.js" defer></script>
+
+</body>
+</html>

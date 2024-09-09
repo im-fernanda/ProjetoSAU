@@ -135,11 +135,59 @@ public class EquipamentoController {
             model.addAttribute("regionais", regionais);
             model.addAttribute("comarcas", comarcas);
             model.addAttribute("unidades", unidades);
+
+
+            // Adiciona uma lista de comarcas associadas para a regional selecionada
+            model.addAttribute("comarcasPorRegional", comarcas.stream()
+                    .filter(c -> c.getRegional().getId().equals(equipamento.getUnidade().getComarca().getRegional().getId()))
+                    .collect(Collectors.toList()));
+
+            // Adiciona uma lista de unidades associadas para a comarca selecionada
+            model.addAttribute("unidadesPorComarca", unidades.stream()
+                    .filter(u -> u.getComarca().getId().equals(equipamento.getUnidade().getComarca().getId()))
+                    .collect(Collectors.toList()));
         } else {
             model.addAttribute("errorMessage", "Equipamento não encontrado.");
         }
 
         return "editarEquipamento";
+    }
+
+    @PostMapping("/processUpdateEquipamento")
+    public ModelAndView processUpdateEquipamento(
+            @ModelAttribute @Valid Equipamento equipamento, BindingResult result,
+            @RequestParam("action") String action) {
+
+        // Verifica se há erros de validação
+        if (result.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("editarEquipamento");
+            modelAndView.addObject("equipamento", equipamento);
+            modelAndView.addObject("regionais", regionalService.findAll());
+            modelAndView.addObject("comarcas", comarcaService.findAll());
+            modelAndView.addObject("comarcasPorRegional", comarcaService.findByRegional(equipamento.getUnidade().getRegional().getId()));
+            return modelAndView;
+        }
+
+        // Atualiza o equipamento se não houver erros
+        equipamentoService.update(equipamento);
+
+        // Redireciona para a lista de equipamentos com uma mensagem de sucesso
+        ModelAndView modelAndView = new ModelAndView("redirect:/listarEquipamentos?success=true");
+        return modelAndView;
+    }
+
+
+    @GetMapping("/deleteEquipamento/{id}")
+    public String deleteUnidade(@PathVariable("id") Long id, Model model) {
+        try {
+            equipamentoService.delete(id);
+            model.addAttribute("msg", "Equipamento deletado com sucesso!");
+            model.addAttribute("alertClass", "alert-success");
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("msg", "Erro ao deletar equipamento: " + e.getMessage());
+            model.addAttribute("alertClass", "alert-danger");
+        }
+        return "redirect:/listarEquipamentos?msg=Remoção realizada com sucesso";
     }
 
 
