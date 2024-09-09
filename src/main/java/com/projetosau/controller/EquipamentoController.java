@@ -176,7 +176,7 @@ public class EquipamentoController {
     }
 
 
-    @GetMapping("/deleteEquipamento/{id}")
+    @GetMapping("/deletarEquipamento/{id}")
     public String deleteUnidade(@PathVariable("id") Long id, Model model) {
         try {
             equipamentoService.delete(id);
