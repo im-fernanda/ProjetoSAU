@@ -50,7 +50,6 @@
 | <kbd> POST /cadastrarUnidade</kbd> | acesso à cadastro de unidades (necessário associar a uma comarca)
 | <kbd> PATCH /editarUnidade</kbd> | acesso à página de edição do NOME da unidade
 | <kbd> DELETE /deletarUnidade</kbd> | deletar unidade permanentemente
-​
 <h3>Equipamentos</h3>
 
 | rota             | descrição                                       
