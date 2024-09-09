@@ -14,8 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,15 +34,37 @@ public class UnidadeController {
     @GetMapping("/cadastroUnidade")
     public String getCadastroUnidadePage(@RequestParam(value = "success", required = false) String success,
                                          @RequestParam(value = "error", required = false) String error,
+                                         @RequestParam(value = "regional", required = false) Long regionalId,
                                          Model model) {
+
         Unidade unidade = new Unidade();
+
+        // Carregar todos os regionais
         List<Regional> regionais = regionalService.findAll();
-        List<Comarca> comarcas = comarcaService.findAll();
+        model.addAttribute("regionais", regionais);
+
+        // Se regionalId for fornecido, carregar comarcas associadas e filtrar regionais
+        if (regionalId != null) {
+            // Carrega as comarcas associadas ao regionalId
+            List<Comarca> comarcas = comarcaService.findByRegional(regionalId);
+            model.addAttribute("comarcas", comarcas);
+
+            // Filtra os regionais relacionados às comarcas
+            Set<Long> regionalIdsRelacionados = comarcas.stream()
+                    .map(Comarca::getRegional)
+                    .map(Regional::getId)
+                    .collect(Collectors.toSet());
+
+            List<Regional> regionaisRelacionados = regionalService.findAllById(regionalIdsRelacionados);
+            model.addAttribute("regionais", regionaisRelacionados);
+        } else {
+            // Sem regionalId, comarcas são uma lista vazia
+            model.addAttribute("comarcas", Collections.emptyList());
+        }
 
         model.addAttribute("unidade", unidade);
-        model.addAttribute("regionais", regionais);
-        model.addAttribute("comarcas", comarcas);
 
+        // Mensagens de sucesso ou erro
         if ("true".equals(success)) {
             model.addAttribute("msg", "Cadastro realizado com sucesso!");
         }
@@ -57,7 +78,7 @@ public class UnidadeController {
 
     @PostMapping("/processSaveUnidade")
     public ModelAndView processSaveUnidade(
-            @ModelAttribute @Valid Unidade unidade, BindingResult result,
+            @ModelAttribute @Valid Unidade unidade, BindingResult result, @RequestParam("regional") Long regionalId,
             @RequestParam("action") String action) {
 
         if (result.hasErrors()) {
@@ -65,6 +86,7 @@ public class UnidadeController {
         }
 
         try {
+
             unidadeService.create(unidade);
 
             if ("save".equals(action)) {
@@ -145,6 +167,12 @@ public class UnidadeController {
         return modelAndView;
     }
 
+
+    @GetMapping("/unidadesPorComarca")
+    @ResponseBody
+    public List<Unidade> getUnidadesPorComarca(@RequestParam("comarcaId") Long comarcaId) {
+        return unidadeService.findByComarca(comarcaId);
+    }
 
 
 }

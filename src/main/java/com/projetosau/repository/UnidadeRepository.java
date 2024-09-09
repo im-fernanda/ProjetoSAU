@@ -11,7 +11,7 @@ public interface UnidadeRepository extends JpaRepository<Unidade, Long> {
 
     boolean existsByNome(String nome);
 
-    public List<Comarca> findByComarca(Comarca comarca);
+    List<Unidade> findByComarca(Comarca comarca);
 
 }
 

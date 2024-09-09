@@ -38,8 +38,11 @@ public class ComarcaService {
     }
 
     public List<Comarca> findByRegional(Long regionalId) {
-        Regional regional = regionalRepository.findById(regionalId)
-                .orElseThrow(() -> new IllegalArgumentException("Regional não encontrado"));
-        return repository.findByRegional(regional);
+        Optional<Regional> regional = regionalRepository.findById(regionalId);
+        if (regional.isPresent()) {
+            return repository.findByRegional(regional.get());
+        } else {
+            throw new IllegalArgumentException("Regional não encontrado.");
+        }
     }
 }

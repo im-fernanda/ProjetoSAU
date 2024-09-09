@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ComarcaController {
@@ -70,10 +71,11 @@ public class ComarcaController {
         return new ModelAndView("redirect:/cadastroComarca");
     }
 
-    @GetMapping("/comarcasPorRegional/{regionalId}")
+    @GetMapping("/comarcasPorRegional")
     @ResponseBody
-    public List<Comarca> getComarcasPorRegional(@PathVariable Long regionalId) {
+    public List<Comarca> getComarcasPorRegional(@RequestParam("regionalId") Long regionalId) {
         return comarcaService.findByRegional(regionalId);
     }
+
 
 } 

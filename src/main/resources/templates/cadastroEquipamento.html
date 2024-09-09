@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Equipamento</title>
     <link rel="stylesheet" href="/styles.css">
+
+
 </head>
 <body>
 <div class="container">
     <h1>Cadastro de Equipamento</h1>
 
-    <form method="post" th:action="@{/processSaveEquipamento}" th:object="${equipamento}">
+    <form id="equipamentoForm" method="post" th:action="@{/processSaveEquipamento}" th:object="${equipamento}">
         <fieldset>
-            <label for="nome">Tombo</label>
+
+            <label for="tombo">Tombo</label>
             <input type="text" id="tombo" name="tombo" th:field="*{tombo}" required>
 
             <label for="nome">Nome</label>
@@ -25,7 +28,7 @@
             <textarea id="descricao" name="descricao" th:field="*{descricao}"></textarea>
 
             <label for="equipamento-regional">Selecione o Regional</label>
-            <select id="equipamento-regional" name="regional" th:field="*{unidade.regional}" required>
+            <select id="equipamento-regional" name="equipamento-regional" th:field="*{unidade.regional}" onchange="loadComarcas()" required>
                 <option value="">Selecione...</option>
                 <option th:each="regional : ${regionais}"
                         th:value="${regional.id}"
@@ -35,7 +38,7 @@
             </select>
 
             <label for="equipamento-comarca">Comarca:</label>
-            <select id="equipamento-comarca" name="comarca" th:field="*{unidade.comarca}" required>
+            <select id="equipamento-comarca" name="equipamento-comarca" th:field="*{unidade.comarca}" onchange="loadUnidades()" required>
                 <option value="">Selecione...</option>
                 <option th:each="comarca : ${comarcas}"
                         th:value="${comarca.id}"
@@ -45,7 +48,7 @@
             </select>
 
             <label for="equipamento-unidade">Unidade:</label>
-            <select id="equipamento-unidade" name="unidade" th:field="*{unidade}" required>
+            <select id="equipamento-unidade" name="equipamento-unidade" th:field="*{unidade}" required>
                 <option value="">Selecione...</option>
                 <option th:each="unidade : ${unidades}"
                         th:value="${unidade.id}"
@@ -60,5 +63,8 @@
         </fieldset>
     </form>
 </div>
+
+<script src="/js/cadastroEquipamento.js" defer></script>
+
 </body>
 </html>

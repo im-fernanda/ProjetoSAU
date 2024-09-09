@@ -16,9 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class EquipamentoController {
@@ -50,30 +49,38 @@ public class EquipamentoController {
 
     @GetMapping("/cadastroEquipamento")
     public String getCadastroEquipamentoPage(Model model,
+                                             @RequestParam(value = "equipamento-regional", required = false) Long regionalId,
+                                             @RequestParam(value = "equipamento-comarca", required = false) Long comarcaId,
                                              @RequestParam(value = "success", required = false) String success,
                                              @RequestParam(value = "error", required = false) String error) {
 
         Equipamento equipamento = new Equipamento();
-        //List<Regional> regioes = regionalService.findAll();
 
-//        Regional regionalSelecionado = regionalService.findById(idRegionalSelecionado);
-//        List<Comarca> comarcas = comarcaService.findByRegional(regionalSelecionado);
-//
-//        Long regionalId = equipamento.getUnidade().getRegional().getId();
-//        // Filtra as comarcasd com base na regional selecionada
-//        List<Comarca> comarcas = comarcaService.findByRegional(regionalId);
-//        model.addAttribute("comarcas", comarcas);
-//
-//        Long comarcaId = equipamento.getUnidade().getId();
-//        // Filtra as unidades com base na comarca selecionada
-//        List<Unidade> unidades = unidadeService.findByComarca(comarcaId);
-//        model.addAttribute("unidades", unidades);
+
+        // Carregar todos os regionais
+        List<Regional> regionais = regionalService.findAll();
+        model.addAttribute("regionais", regionais);
+
+        // Se regionalId for fornecido, carregar comarcas associadas e filtrar regionais
+        if (regionalId != null) {
+            // Carrega as comarcas associadas ao regionalId
+            List<Comarca> comarcas = comarcaService.findByRegional(regionalId);
+            model.addAttribute("comarcas", comarcas);
+
+            // Filtra os regionais relacionados às comarcas
+            Set<Long> regionalIdsRelacionados = comarcas.stream()
+                    .map(Comarca::getRegional)
+                    .map(Regional::getId)
+                    .collect(Collectors.toSet());
+
+            List<Regional> regionaisRelacionados = regionalService.findAllById(regionalIdsRelacionados);
+            model.addAttribute("regionais", regionaisRelacionados);
+        } else {
+            // Sem regionalId, comarcas são uma lista vazia
+            model.addAttribute("comarcas", Collections.emptyList());
+        }
 
         model.addAttribute("equipamento", equipamento);
-        model.addAttribute("regionais", regionalService.findAll());
-        model.addAttribute("comarcas", comarcaService.findAll());
-        model.addAttribute("unidades", unidadeService.findAll());
-
 
         if ("true".equals(success)) {
             model.addAttribute("msg", "Cadastro realizado com sucesso!");
@@ -102,7 +109,7 @@ public class EquipamentoController {
                 return new ModelAndView("redirect:/cadastroEquipamento?success=true");
             } else if ("goToEquipamentos".equals(action)) {
                 // Redireciona para a página de cadastro de unidades
-                return new ModelAndView("redirect:/cadastroEquipamento?success=true");
+                return new ModelAndView("redirect:/listarEquipamentos");
             }
         } catch (IllegalArgumentException e) {
             ModelAndView modelAndView = new ModelAndView("redirect:/cadastroEquipamento?error=true");

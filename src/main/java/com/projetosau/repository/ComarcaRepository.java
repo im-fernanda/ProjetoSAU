@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ComarcaRepository extends JpaRepository<Comarca, Long> {
     boolean existsByNome(String nome);
 
-    public List<Comarca> findByRegional(Regional regional);
+    List<Comarca> findByRegional(Regional regional);
 }

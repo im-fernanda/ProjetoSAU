@@ -56,12 +56,13 @@ public class UnidadeService {
         return repository.findAll();
     }
 
-    public List<Comarca> findByComarca(Long comarcaId) {
-        Comarca comarca = comarcaRepository.findById(comarcaId)
-                .orElseThrow(() -> new IllegalArgumentException("Comarca não encontrada"));
-
-        return repository.findByComarca(comarca);
-
+    public List<Unidade> findByComarca(Long comarcaId) {
+        Optional<Comarca> comarca = comarcaRepository.findById(comarcaId);
+            if (comarca.isPresent()) {
+            return repository.findByComarca(comarca.get());
+        } else {
+            throw new IllegalArgumentException("Comarca não encontrada.");
+        }
     }
 
 }

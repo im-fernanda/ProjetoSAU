@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RegionalService {
@@ -37,5 +38,7 @@ public class RegionalService {
         return repository.save(regional);
     }
 
-
+    public List<Regional> findAllById(Set<Long> regionalIdsRelacionados) {
+        return repository.findAllById(regionalIdsRelacionados);
+    }
 }
