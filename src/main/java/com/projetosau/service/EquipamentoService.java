@@ -33,6 +33,7 @@ public class EquipamentoService {
         if (repository.existsByTombo(equipamento.getTombo())) {
             throw new IllegalArgumentException("O tombo já existe. Escolha um tombo diferente.");
         }
+
         return repository.save(equipamento);
     }
 

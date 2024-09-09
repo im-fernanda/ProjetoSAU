@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Locais</title>
+    <title>Lista de Equipamentos</title>
     <link rel="stylesheet" href="/styles.css">
     <!-- Importar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div class="container">
-    <h1>Lista de Locais</h1>
+    <h1>Lista de Equipamentos</h1>
 
     <!-- Mensagem de sucesso, se houver -->
     <div th:if="${msg}" class="alert alert-success" role="alert" th:text="${msg}"></div>
@@ -19,25 +19,29 @@
         <table>
             <thead>
             <tr>
+                <th>Tombo</th>
+                <th>Nome</th>
+                <th>Modelo</th>
+                <th>Descrição</th>
                 <th>Unidade</th>
-                <th>Comarca</th>
-                <th>Regional</th>
-                <th>Ações</th>
+                <th>Ações</th> <!-- Coluna para os botões de ações -->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="unidade : ${unidades}">
-                <td th:text="${unidade.nome}">Nome da Unidade</td>
-                <td th:text="${unidade.comarca.nome}">Nome da Comarca</td>
-                <td th:text="${unidade.comarca.regional.nome}">Nome do Regional</td>
+            <tr th:each="equipamento : ${equipamentos}">
+                <td th:text="${equipamento.tombo}">Tombo</td>
+                <td th:text="${equipamento.nome}">Nome</td>
+                <td th:text="${equipamento.modelo}">Modelo</td>
+                <td th:text="${equipamento.descricao}">Descrição</td>
+                <td th:text="${equipamento.unidade.nome}">Unidade</td>
                 <td>
                     <div class="action-btns">
                         <!-- Botão de Editar -->
-                        <a th:href="@{/editarUnidade/{id}(id=${unidade.id})}" class="action-btn">
+                        <a th:href="@{/editarEquipamento/{id}(id=${equipamento.id})}" class="action-btn">
                             <i class="fa fa-pencil" title="Editar"></i>
                         </a>
                         <!-- Botão de Deletar -->
-                        <a th:href="@{/deleteUnidade/{id}(id=${unidade.id})}" class="action-btn" onclick="return confirm('Tem certeza que deseja excluir este produto?');">
+                        <a th:href="@{/deleteEquipamento/{id}(id=${equipamento.id})}" class="action-btn" onclick="return confirm('Tem certeza que deseja excluir este equipamento?');">
                             <i class="fa fa-trash" title="Excluir"></i>
                         </a>
                     </div>
@@ -47,9 +51,7 @@
         </table>
     </fieldset>
 
-    <a href="/cadastroUnidade" class="btn">Cadastrar Unidade</a>
-    <a href="/cadastroComarca" class="btn">Cadastrar Comarca</a>
-    <a href="/cadastroRegional" class="btn">Cadastrar Regional</a>
+    <a href="/cadastroEquipamento" class="btn">Cadastrar Equipamento</a>
 </div>
 </body>
 </html>

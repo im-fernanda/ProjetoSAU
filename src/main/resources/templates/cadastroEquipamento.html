@@ -5,49 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Equipamento</title>
     <link rel="stylesheet" href="/styles.css">
-
-    <script src="../static/scripts.js" defer></script>
 </head>
 <body>
 <div class="container">
     <h1>Cadastro de Equipamento</h1>
-    <form th:action="@{/processSave/{editar_ou_cadastrar}(editar_ou_cadastrar=${'cad'})}" method="post" th:object="${equipamento}" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Informações do Equipamento</legend>
 
-            <label for="tombo">Tombo</label>
-            <input type="text" id="tombo" name="tombo" required>
+    <form method="post" th:action="@{/processSaveEquipamento}" th:object="${equipamento}">
+        <fieldset>
+            <label for="nome">Tombo</label>
+            <input type="text" id="tombo" name="tombo" th:field="*{tombo}" required>
 
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="nome" th:field="*{nome}" required>
 
             <label for="modelo">Modelo</label>
-            <input type="text" id="modelo" name="modelo" required>
-
-            <label for="regional">Regional</label>
-            <select id="regional" name="regional" required>
-                <option value="">Selecione...</option>
-                <!-- As opções serão preenchidas dinamicamente pelo script -->
-            </select>
-
-            <label for="comarca">Comarca</label>
-            <select id="comarca" name="comarca" required>
-                <option value="">Selecione...</option>
-                <!-- As opções serão preenchidas dinamicamente pelo script -->
-            </select>
-
-            <label for="unidade">Unidade</label>
-            <select id="unidade" name="unidade" required>
-                <option value="">Selecione...</option>
-                <!-- As opções serão preenchidas dinamicamente pelo script -->
-            </select>
+            <input type="text" id="modelo" name="modelo" th:field="*{modelo}" required>
 
             <label for="descricao">Descrição</label>
-            <textarea id="descricao" name="descricao" rows="4"></textarea>
+            <textarea id="descricao" name="descricao" th:field="*{descricao}"></textarea>
 
+            <label for="equipamento-regional">Selecione o Regional</label>
+            <select id="equipamento-regional" name="regional" th:field="*{unidade.regional}" required>
+                <option value="">Selecione...</option>
+                <option th:each="regional : ${regionais}"
+                        th:value="${regional.id}"
+                        th:text="${regional.nome}"
+                        th:selected="${equipamento.unidade?.regional?.id == regional.id}">
+                </option>
+            </select>
+
+            <label for="equipamento-comarca">Comarca:</label>
+            <select id="equipamento-comarca" name="comarca" th:field="*{unidade.comarca}" required>
+                <option value="">Selecione...</option>
+                <option th:each="comarca : ${comarcas}"
+                        th:value="${comarca.id}"
+                        th:text="${comarca.nome}"
+                        th:selected="${equipamento.unidade?.comarca?.id == comarca.id}">
+                </option>
+            </select>
+
+            <label for="equipamento-unidade">Unidade:</label>
+            <select id="equipamento-unidade" name="unidade" th:field="*{unidade}" required>
+                <option value="">Selecione...</option>
+                <option th:each="unidade : ${unidades}"
+                        th:value="${unidade.id}"
+                        th:text="${unidade.nome}"
+                        th:selected="${equipamento.unidade?.id == unidade.id}">
+                </option>
+            </select>
+
+            <!-- Botões para ações -->
+            <button type="submit" name="action" value="save">Salvar</button>
+            <button type="submit" name="action" value="goToEquipamentos">Salvar e Ver Todos</button>
         </fieldset>
-
-        <button type="submit">Cadastrar</button>
     </form>
 </div>
 </body>

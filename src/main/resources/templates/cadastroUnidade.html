@@ -5,31 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Unidade</title>
     <link rel="stylesheet" href="/styles.css">
-    <script src="/js/carregarComarcas.js" defer></script>
-
 </head>
 <body>
 <div class="container">
     <h1>Cadastro de Unidade</h1>
 
-    <form action="#" method="post" th:action="@{/processSaveUnidade}" th:object="${unidade}">
+    <form method="post" th:action="@{/processSaveUnidade}" th:object="${unidade}">
         <fieldset>
+
             <label for="comarca-regional">Selecione o Regional</label>
-            <select id="comarca-regional" name="regional" required>
+            <select id="comarca-regional" name="regional" th:field="*{regional}" required>
                 <option value="">Selecione...</option>
-                <option th:each="regional : ${regionais}" th:value="${regional.id}" th:text="${regional.nome}"></option>
+                <option th:each="regional : ${regionais}"
+                        th:value="${regional.id}"
+                        th:text="${regional.nome}"
+                        th:selected="${unidade.regional != null && unidade.regional.id == regional.id ? 'selected' : ''}">
+                </option>
             </select>
 
             <div>
                 <label for="comarca">Comarca:</label>
-                <select id="comarca" name="comarca">
+                <select id="comarca" name="comarca" th:field="*{comarca}" required>
                     <option value="">Selecione...</option>
-                    <!-- As opções serão carregadas dinamicamente pelo JavaScript -->
+                    <option th:each="comarca : ${comarcas}"
+                            th:value="${comarca.id}"
+                            th:text="${comarca.nome}"
+                            th:selected="${unidade.comarca != null && unidade.comarca.id == comarca.id ? 'selected' : ''}">
+                    </option>
                 </select>
             </div>
 
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" th:value="${unidade.nome}" required>
+            <input type="text" id="nome" name="nome" th:field="*{nome}" required>
 
             <!-- Botões para ações -->
             <button type="submit" name="action" value="save">Salvar</button>

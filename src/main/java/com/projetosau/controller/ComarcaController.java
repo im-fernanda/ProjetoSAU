@@ -73,7 +73,7 @@ public class ComarcaController {
     @GetMapping("/comarcasPorRegional/{regionalId}")
     @ResponseBody
     public List<Comarca> getComarcasPorRegional(@PathVariable Long regionalId) {
-        return comarcaService.findByRegionalId(regionalId);
+        return comarcaService.findByRegional(regionalId);
     }
 
 } 

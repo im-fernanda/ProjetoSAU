@@ -13,18 +13,22 @@
     <!-- Mensagem de alerta, se houver -->
     <div th:if="${msg}" class="alert alert-warning" role="alert" th:text="${msg}"></div>
 
-    <form id="comarcaForm" th:action="@{/processSaveComarca}" method="post" th:object="${comarca}">
+    <form th:action="@{/processSaveComarca}" method="post" th:object="${comarca}">
         <fieldset>
             <legend>Informações da Comarca</legend>
 
             <label for="comarca-regional">Selecione o Regional</label>
-            <select id="comarca-regional" name="regional" required>
+            <select id="comarca-regional" name="regional" th:field="*{regional}" required>
                 <option value="">Selecione...</option>
-                <option th:each="regional : ${regionais}" th:value="${regional.id}" th:text="${regional.nome}"></option>
+                <option th:each="regional : ${regionais}"
+                        th:value="${regional.id}"
+                        th:text="${regional.nome}"
+                        th:selected="${comarca.regional != null && comarca.regional.id == regional.id ? 'selected' : ''}">
+                </option>
             </select>
 
             <label for="comarca-nome">Nome</label>
-            <input type="text" id="comarca-nome" name="nome" th:value="${comarca.nome}" required>
+            <input type="text" id="comarca-nome" name="nome" th:field="*{nome}" required>
 
         </fieldset>
 

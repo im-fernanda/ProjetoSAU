@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class UnidadeController {
@@ -85,15 +86,6 @@ public class UnidadeController {
         List<Unidade> unidades = unidadeService.findAll();
         model.addAttribute("unidades", unidades);
 
-        if (Boolean.TRUE.equals(success)) {
-            model.addAttribute("msg", "Cadastro realizado com sucesso!");
-        }
-
-        // Verificando o conteúdo da lista de unidades
-        unidades.forEach(unidade -> {
-            System.out.println("Unidade: " + unidade.getNome() + ", Comarca: " + unidade.getComarca().getNome() +
-                    ", Regional: " + unidade.getComarca().getRegional().getNome());
-        });
 
         return "listarLocais";
     }
@@ -124,8 +116,12 @@ public class UnidadeController {
             model.addAttribute("unidade", unidade);
             model.addAttribute("regionais", regionais);
             model.addAttribute("comarcas", comarcas);
+
+            // Adicione uma lista de comarcas associadas para a regional selecionada
+            model.addAttribute("comarcasPorRegional", comarcas.stream()
+                    .filter(c -> c.getRegional().getId().equals(unidade.getRegional().getId()))
+                    .collect(Collectors.toList()));
         } else {
-            // Lidar com o caso onde a unidade não é encontrada, por exemplo:
             model.addAttribute("errorMessage", "Unidade não encontrada.");
         }
 
@@ -148,6 +144,7 @@ public class UnidadeController {
         modelAndView.addObject("unidade", unidadeService.findAll());
         return modelAndView;
     }
+
 
 
 }

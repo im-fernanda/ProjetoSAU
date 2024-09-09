@@ -1,6 +1,9 @@
 package com.projetosau.service;
 
+import com.projetosau.domain.Comarca;
+import com.projetosau.domain.Regional;
 import com.projetosau.domain.Unidade;
+import com.projetosau.repository.ComarcaRepository;
 import com.projetosau.repository.UnidadeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -12,9 +15,11 @@ import java.util.Optional;
 @Service
 public class UnidadeService {
     private final UnidadeRepository repository;
+    private final ComarcaRepository comarcaRepository;
 
-    public UnidadeService(UnidadeRepository repository) {
+    public UnidadeService(UnidadeRepository repository, ComarcaRepository comarcaRepository) {
         this.repository = repository;
+        this.comarcaRepository = comarcaRepository;
     }
 
     public Optional<Unidade> findById(Long id) {
@@ -50,5 +55,14 @@ public class UnidadeService {
     public List<Unidade> findAll() {
         return repository.findAll();
     }
+
+    public List<Comarca> findByComarca(Long comarcaId) {
+        Comarca comarca = comarcaRepository.findById(comarcaId)
+                .orElseThrow(() -> new IllegalArgumentException("Comarca não encontrada"));
+
+        return repository.findByComarca(comarca);
+
+    }
+
 }
 

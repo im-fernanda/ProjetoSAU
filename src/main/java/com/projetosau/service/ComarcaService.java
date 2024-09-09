@@ -1,7 +1,9 @@
 package com.projetosau.service;
 
 import com.projetosau.domain.Comarca;
+import com.projetosau.domain.Regional;
 import com.projetosau.repository.ComarcaRepository;
+import com.projetosau.repository.RegionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import java.util.Optional;
 @Service
 public class ComarcaService {
     private final ComarcaRepository repository;
+    private final RegionalRepository regionalRepository;
 
     @Autowired
-    public ComarcaService(ComarcaRepository repository) {
+    public ComarcaService(ComarcaRepository repository, RegionalRepository regionalRepository) {
         this.repository = repository;
+        this.regionalRepository = regionalRepository;
     }
 
     public Comarca create(Comarca comarca) {
@@ -29,11 +33,13 @@ public class ComarcaService {
         return repository.findAll();
     }
 
-    public Optional<Comarca> findById(String id) {
+    public Optional<Comarca> findById(Long id) {
         return repository.findById(id);
     }
 
-    public List<Comarca> findByRegionalId(Long regionalId) {
-        return repository.findByRegionalId(regionalId);
+    public List<Comarca> findByRegional(Long regionalId) {
+        Regional regional = regionalRepository.findById(regionalId)
+                .orElseThrow(() -> new IllegalArgumentException("Regional não encontrado"));
+        return repository.findByRegional(regional);
     }
 }

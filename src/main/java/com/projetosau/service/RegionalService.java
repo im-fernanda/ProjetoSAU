@@ -26,7 +26,7 @@ public class RegionalService {
         return repository.findAll();
     }
 
-    public Optional<Regional> findById(String id) {
+    public Optional<Regional> findById(Long id) {
         return repository.findById(id);
     }
 
@@ -36,5 +36,6 @@ public class RegionalService {
         }
         return repository.save(regional);
     }
+
 
 }
