@@ -36,19 +36,8 @@
   ```
 5. Execute o projeto e abra localhost:8080;
 
-<h2 id="routes">📍 API Endpoints</h2>
-​
-<h3>Equipamentos</h3>
 
-| rota             | descrição                                       
-|----------------------|-----------------------------------------------------
-| <kbd> GET /listarEquipamentos</kbd>     | acesso à homepage do site com acesso à listagem dos equipamentos --- NOT READY
-| <kbd> POST /cadastrarEquipamento</kbd> | acesso à cadastro de equipamento (necessário associar a um local) --- NOT READY
-| <kbd> POST /editarEquipamento</kbd> | acesso à página de edição dos detalhes de um equipamento já cadastrado (NÃO utilizar para transferência de locais) --- NOT READY
-| <kbd> POST /cadastrarTransferencia</kbd> | acesso à registro de transfêrencia de equipamento para outro local  --- NOT READY
-| <kbd> GET /listarPorTombo</kbd> | acesso aos detalhes do equipamento (detalhes e histórico de transferência) --- NOT READY
-| <kbd> GET /listarPorNome</kbd> | acesso à listagem de equipamentos que possuem o mesmo nome (ex.: computador, impressora) --- NOT READY
-| <kbd> GET /listarPorLocal</kbd> | acesso à listagem de equipamentos disponíveis em um local especifico --- NOT READY
+<h2 id="routes">📍 API Endpoints</h2>
 
 
 <h3>Locais</h3>
@@ -61,6 +50,17 @@
 | <kbd> POST /cadastrarUnidade</kbd> | acesso à cadastro de unidades (necessário associar a uma comarca)
 | <kbd> PATCH /editarUnidade</kbd> | acesso à página de edição do NOME da unidade
 | <kbd> DELETE /deletarUnidade</kbd> | deletar unidade
+​
+<h3>Equipamentos</h3>
 
+| rota             | descrição                                       
+|----------------------|-----------------------------------------------------
+| <kbd> GET /listarEquipamentos</kbd>     | acesso à homepage do site com acesso à listagem dos equipamentos
+| <kbd> POST /cadastrarEquipamento</kbd> | acesso à cadastro de equipamento (necessário associar a um local)
+| <kbd> POST /editarEquipamento</kbd> | acesso à página de edição dos detalhes de um equipamento já cadastrado (NÃO utilizar para transferência de locais)
+| <kbd> POST /cadastrarTransferencia</kbd> | acesso à registro de transfêrencia de equipamento para outro local  --- NOT READY
+| <kbd> GET /listarPorTombo</kbd> | acesso aos detalhes do equipamento (detalhes e histórico de transferência) --- NOT READY
+| <kbd> GET /listarPorNome</kbd> | acesso à listagem de equipamentos que possuem o mesmo nome (ex.: computador, impressora) --- NOT READY
+| <kbd> GET /listarPorLocal</kbd> | acesso à listagem de equipamentos disponíveis em um local especifico --- NOT READY
 
 
