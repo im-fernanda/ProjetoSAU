@@ -4,10 +4,11 @@
     <div class="mp-logo-container">
       <img
         id="logo-img"
-        th:src="@{/images/logo-mprn.jpg}"
+        src="/images/logo-mprn.png"
+        th:src="@{/images/logo-mprn.png}"
         alt="Logo Ministério Público"
         class="mp-logo"
-        onerror="tryLogoFallback(this);"
+        onerror="this.style.display='none'; const fallback = document.getElementById('logo-fallback'); if (fallback) fallback.style.display='block';"
       />
       <div id="logo-fallback" style="display: none">
         <div class="mp-header-title">
@@ -15,10 +16,13 @@
           <span class="subtitle">Gerenciador de Equipamentos</span>
         </div>
       </div>
+      <div class="mp-logo-text" id="mp-logo-text">
+        <h2>MPRN</h2>
+      </div>
     </div>
     <div class="mp-header-title">
       <h1 th:text="${title}">Gerenciador SAU</h1>
-      <span class="subtitle">Sistema de Atendimento ao Usuário - MPRN</span>
+      <span class="subtitle">Sistema de Atendimento ao Usuário</span>
     </div>
     <nav class="mp-nav">
       <a href="/" class="mp-nav-link"><i class="fas fa-home"></i> Início</a>
@@ -31,47 +35,3 @@
     </nav>
   </div>
 </header>
-
-<script>
-  function tryLogoFallback(imgElement) {
-    const currentSrc = imgElement.src;
-    const basePath = currentSrc.substring(
-      0,
-      currentSrc.lastIndexOf("/images/") + 1
-    );
-
-    // Lista de formatos possíveis para tentar (em ordem de prioridade)
-    const formats = [
-      "/images/logo.jpg",
-      "/images/logo-mprn.png",
-      "/images/logo.png",
-    ];
-
-    let formatIndex = 0;
-
-    function tryNextFormat() {
-      if (formatIndex >= formats.length) {
-        // Não encontrou nenhum logo, mostra fallback de texto
-        imgElement.style.display = "none";
-        const fallback = document.getElementById("logo-fallback");
-        if (fallback) {
-          fallback.style.display = "block";
-        }
-        return;
-      }
-
-      const testImg = new Image();
-      testImg.onload = function () {
-        imgElement.src = basePath + formats[formatIndex];
-        imgElement.style.display = "block";
-      };
-      testImg.onerror = function () {
-        formatIndex++;
-        tryNextFormat();
-      };
-      testImg.src = basePath + formats[formatIndex];
-    }
-
-    tryNextFormat();
-  }
-</script>
