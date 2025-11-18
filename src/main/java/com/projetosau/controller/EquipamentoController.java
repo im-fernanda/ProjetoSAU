@@ -9,7 +9,6 @@ import com.projetosau.service.EquipamentoService;
 import com.projetosau.service.RegionalService;
 import com.projetosau.service.UnidadeService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,13 +26,17 @@ public class EquipamentoController {
     private final ComarcaService comarcaService;
     private final UnidadeService unidadeService;
 
-    @Autowired
     public EquipamentoController(EquipamentoService equipamentoService, RegionalService regionalService,
                                  ComarcaService comarcaService, UnidadeService unidadeService) {
         this.equipamentoService = equipamentoService;
         this.regionalService = regionalService;
         this.comarcaService = comarcaService;
         this.unidadeService = unidadeService;
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/listarEquipamentos";
     }
 
     @GetMapping("/listarEquipamentos")

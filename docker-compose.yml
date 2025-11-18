@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: projetosau-postgres
+    environment:
+      POSTGRES_DB: gerenciador_sau
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-2005}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - projetosau-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: projetosau-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gerenciador_sau
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-2005}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      # Otimizações para startup mais rápido
+      SPRING_JPA_SHOW_SQL: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "false"
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - projetosau-network
+    restart: unless-stopped
+    # Aumenta timeout para aguardar aplicação iniciar
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  postgres_data:
+
+networks:
+  projetosau-network:
+    driver: bridge
+

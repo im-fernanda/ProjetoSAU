@@ -1,13 +1,10 @@
 package com.projetosau.service;
 
 import com.projetosau.domain.Comarca;
-import com.projetosau.domain.Regional;
 import com.projetosau.domain.Unidade;
 import com.projetosau.repository.ComarcaRepository;
 import com.projetosau.repository.UnidadeRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
