@@ -192,4 +192,97 @@ public class EquipamentoController {
         return "redirect:/listarEquipamentos?msg=Remoção realizada com sucesso";
     }
 
+    @GetMapping("/listarPorLocal/{unidadeId}")
+    public String listarPorLocal(@PathVariable("unidadeId") Long unidadeId, Model model) {
+        Optional<Unidade> unidadeOpt = unidadeService.findById(unidadeId);
+        
+        if (unidadeOpt.isEmpty()) {
+            model.addAttribute("errorMessage", "Unidade não encontrada.");
+            return "redirect:/listarLocais";
+        }
+
+        Unidade unidade = unidadeOpt.get();
+        List<Equipamento> equipamentos = equipamentoService.findByUnidadeId(unidadeId);
+
+        model.addAttribute("unidade", unidade);
+        model.addAttribute("equipamentos", equipamentos);
+
+        return "listarEquipamentosPorLocal";
+    }
+
+    @GetMapping("/listarPorTombo")
+    public String buscarPorTomboForm(Model model) {
+        return "buscarPorTombo";
+    }
+
+    @GetMapping("/listarPorTombo/{tombo}")
+    public String listarPorTombo(@PathVariable("tombo") Integer tombo, Model model) {
+        Optional<Equipamento> equipamentoOpt = equipamentoService.findByTombo(tombo);
+
+        if (equipamentoOpt.isEmpty()) {
+            model.addAttribute("errorMessage", "Equipamento com tombo " + tombo + " não encontrado.");
+            model.addAttribute("tombo", tombo);
+            return "buscarPorTombo";
+        }
+
+        Equipamento equipamento = equipamentoOpt.get();
+        model.addAttribute("equipamento", equipamento);
+
+        return "detalhesEquipamento";
+    }
+
+    @GetMapping("/listarPorNome")
+    public String buscarPorNomeForm(Model model) {
+        return "buscarPorNome";
+    }
+
+    @GetMapping("/listarPorNome/resultado")
+    public String listarPorNome(@RequestParam("nome") String nome, Model model) {
+        if (nome == null || nome.trim().isEmpty()) {
+            model.addAttribute("errorMessage", "Por favor, informe um nome para buscar.");
+            return "buscarPorNome";
+        }
+
+        List<Equipamento> equipamentos = equipamentoService.findByNome(nome.trim());
+        model.addAttribute("equipamentos", equipamentos);
+        model.addAttribute("nomeBusca", nome.trim());
+
+        return "listarEquipamentosPorNome";
+    }
+
+    @GetMapping("/cadastrarTransferencia/{id}")
+    public String getTransferenciaForm(@PathVariable("id") Long id, Model model) {
+        Optional<Equipamento> equipamentoOpt = equipamentoService.findById(id);
+
+        if (equipamentoOpt.isEmpty()) {
+            model.addAttribute("errorMessage", "Equipamento não encontrado.");
+            return "redirect:/listarEquipamentos";
+        }
+
+        Equipamento equipamento = equipamentoOpt.get();
+        List<Unidade> unidades = unidadeService.findAll();
+        List<Regional> regionais = regionalService.findAll();
+
+        model.addAttribute("equipamento", equipamento);
+        model.addAttribute("unidades", unidades);
+        model.addAttribute("regionais", regionais);
+
+        return "transferirEquipamento";
+    }
+
+    @PostMapping("/processTransferencia")
+    public ModelAndView processTransferencia(
+            @RequestParam("equipamentoId") Long equipamentoId,
+            @RequestParam("novaUnidadeId") Long novaUnidadeId) {
+
+        try {
+            equipamentoService.transferirEquipamento(equipamentoId, novaUnidadeId);
+            return new ModelAndView("redirect:/listarEquipamentos?msg=Transferência realizada com sucesso");
+        } catch (IllegalArgumentException e) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/cadastrarTransferencia/" + equipamentoId);
+            modelAndView.addObject("errorMessage", e.getMessage());
+            return modelAndView;
+        }
+    }
+
 }

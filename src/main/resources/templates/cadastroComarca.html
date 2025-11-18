@@ -1,43 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Comarca</title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
-<div class="container">
-    <h1>Cadastro de Comarca</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Comarca - Gerenciador SAU</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header Institucional -->
+    <div
+      th:replace="~{fragments/header :: header('Cadastro de Comarca')}"
+    ></div>
 
-    <!-- Mensagem de alerta, se houver -->
-    <div th:if="${msg}" class="alert alert-warning" role="alert" th:text="${msg}"></div>
+    <!-- Container Principal -->
+    <main class="container">
+      <div class="content-card">
+        <h1><i class="fas fa-plus-circle"></i> Cadastro de Comarca</h1>
 
-    <form th:action="@{/processSaveComarca}" method="post" th:object="${comarca}">
-        <fieldset>
-            <legend>Informações da Comarca</legend>
+        <!-- Mensagem de alerta, se houver -->
+        <div
+          th:if="${msg}"
+          class="alert"
+          th:classappend="${error == 'true' ? 'alert-danger' : 'alert-warning'}"
+          role="alert"
+        >
+          <i class="fas fa-exclamation-circle"></i>
+          <span th:text="${msg}"></span>
+        </div>
 
-            <label for="comarca-regional">Selecione o Regional</label>
-            <select id="comarca-regional" name="regional" th:field="*{regional}" required>
-                <option value="">Selecione...</option>
-                <option th:each="regional : ${regionais}"
-                        th:value="${regional.id}"
-                        th:text="${regional.nome}"
-                        th:selected="${comarca.regional != null && comarca.regional.id == regional.id ? 'selected' : ''}">
-                </option>
+        <form
+          th:action="@{/processSaveComarca}"
+          method="post"
+          th:object="${comarca}"
+        >
+          <fieldset>
+            <legend>
+              <i class="fas fa-info-circle"></i> Informações da Comarca
+            </legend>
+
+            <label for="comarca-regional"
+              ><i class="fas fa-map"></i> Regional
+              <span style="color: red">*</span></label
+            >
+            <select
+              id="comarca-regional"
+              name="regional"
+              th:field="*{regional}"
+              required
+            >
+              <option value="">Selecione um regional...</option>
+              <option
+                th:each="regional : ${regionais}"
+                th:value="${regional.id}"
+                th:text="${regional.nome}"
+                th:selected="${comarca.regional != null && comarca.regional.id == regional.id ? 'selected' : ''}"
+              ></option>
             </select>
 
-            <label for="comarca-nome">Nome</label>
-            <input type="text" id="comarca-nome" name="nome" th:field="*{nome}" required>
+            <label for="comarca-nome"
+              ><i class="fas fa-gavel"></i> Nome da Comarca
+              <span style="color: red">*</span></label
+            >
+            <input
+              type="text"
+              id="comarca-nome"
+              name="nome"
+              th:field="*{nome}"
+              required
+              placeholder="Digite o nome da comarca"
+            />
+          </fieldset>
 
-        </fieldset>
+          <div
+            style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap"
+          >
+            <button type="submit" name="action" value="save" class="btn">
+              <i class="fas fa-save"></i> Cadastrar e Permanecer
+            </button>
+            <button
+              type="submit"
+              name="action"
+              value="goToUnits"
+              class="btn btn-success"
+            >
+              <i class="fas fa-arrow-right"></i> Cadastrar e Ir para Unidades
+            </button>
+            <a href="/listarLocais" class="btn btn-secondary">
+              <i class="fas fa-times"></i> Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+    </main>
 
-        <!-- Botão para cadastrar e permanecer na mesma página -->
-        <button type="submit" name="action" value="save">Cadastrar e permanecer</button>
-
-        <!-- Botão para cadastrar e ir para a página de cadastro de unidades -->
-        <button type="submit" name="action" value="goToUnits">Cadastrar e ir para Unidades</button>
-    </form>
-</div>
-</body>
+    <!-- Footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+  </body>
 </html>

@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Equipamentos - Gerenciador SAU</title>
+    <title>Equipamentos da Unidade - Gerenciador SAU</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
 <!-- Header Institucional -->
-<div th:replace="~{fragments/header :: header('Gerenciador de Equipamentos')}"></div>
+<div th:replace="~{fragments/header :: header('Equipamentos da Unidade')}"></div>
 
 <!-- Container Principal -->
 <main class="container">
     <div class="content-card">
-        <h1><i class="fas fa-laptop"></i> Equipamentos Cadastrados</h1>
-        
-        <!-- Mensagem de sucesso, se houver -->
-        <div th:if="${msg}" class="alert alert-success" role="alert">
-            <i class="fas fa-check-circle"></i> <span th:text="${msg}"></span>
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/listarLocais" class="btn btn-secondary" style="margin-bottom: 1rem;">
+                <i class="fas fa-arrow-left"></i> Voltar para Locais
+            </a>
         </div>
 
-        <div th:if="${success}" class="alert alert-success" role="alert">
-            <i class="fas fa-check-circle"></i> Operação realizada com sucesso!
-        </div>
+        <h1><i class="fas fa-building"></i> Equipamentos da Unidade</h1>
+        <h3 th:if="${unidade}">
+            <strong>Unidade:</strong> <span th:text="${unidade.nome}"></span><br>
+            <span style="font-size: 0.9em; color: var(--mp-gray);">
+                <strong>Comarca:</strong> <span th:text="${unidade.comarca.nome}"></span> | 
+                <strong>Regional:</strong> <span th:text="${unidade.comarca.regional.nome}"></span>
+            </span>
+        </h3>
 
-        <div style="margin: 2rem 0; display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="/cadastroEquipamento" class="btn"><i class="fas fa-plus"></i> Cadastrar Novo Equipamento</a>
-            <a href="/listarPorTombo" class="btn btn-secondary"><i class="fas fa-search"></i> Buscar por Tombo</a>
-            <a href="/listarPorNome" class="btn btn-secondary"><i class="fas fa-search"></i> Buscar por Nome</a>
-        </div>
-
-        <fieldset>
-            <legend><i class="fas fa-list"></i> Listagem de Equipamentos</legend>
-            
-            <div th:if="${equipamentos != null && !equipamentos.empty}">
+        <div th:if="${equipamentos != null && !equipamentos.empty}">
+            <fieldset>
+                <legend><i class="fas fa-list"></i> Equipamentos Cadastrados</legend>
+                
                 <table>
                     <thead>
                         <tr>
@@ -43,33 +41,17 @@
                             <th><i class="fas fa-tag"></i> Nome</th>
                             <th><i class="fas fa-cog"></i> Modelo</th>
                             <th><i class="fas fa-align-left"></i> Descrição</th>
-                            <th><i class="fas fa-building"></i> Unidade</th>
                             <th><i class="fas fa-tools"></i> Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="equipamento : ${equipamentos}">
-                            <td>
-                                <a th:href="@{/listarPorTombo/{tombo}(tombo=${equipamento.tombo})}" 
-                                   style="color: var(--mp-primary); text-decoration: none; font-weight: 500;"
-                                   th:text="${equipamento.tombo}">Tombo</a>
-                            </td>
+                            <td th:text="${equipamento.tombo}">Tombo</td>
                             <td th:text="${equipamento.nome}">Nome</td>
                             <td th:text="${equipamento.modelo}">Modelo</td>
                             <td th:text="${equipamento.descricao}">Descrição</td>
                             <td>
-                                <a th:href="@{/listarPorLocal/{id}(id=${equipamento.unidade.id})}" 
-                                   style="color: var(--mp-primary); text-decoration: none;"
-                                   th:text="${equipamento.unidade.nome}">Unidade</a>
-                            </td>
-                            <td>
                                 <div class="action-btns">
-                                    <a th:href="@{/listarPorTombo/{tombo}(tombo=${equipamento.tombo})}" 
-                                       class="action-btn" 
-                                       title="Ver Detalhes"
-                                       style="color: var(--mp-secondary);">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
                                     <a th:href="@{/editarEquipamento/{id}(id=${equipamento.id})}" 
                                        class="action-btn" 
                                        title="Editar Equipamento">
@@ -92,13 +74,23 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            
-            <div th:if="${equipamentos == null || equipamentos.empty}" class="alert alert-info">
-                <i class="fas fa-info-circle"></i> Nenhum equipamento cadastrado ainda. 
-                <a href="/cadastroEquipamento" style="color: inherit; text-decoration: underline;">Clique aqui para cadastrar o primeiro.</a>
-            </div>
-        </fieldset>
+                
+                <div style="margin-top: 1rem; padding: 1rem; background: var(--mp-light); border-radius: 4px;">
+                    <strong><i class="fas fa-info-circle"></i> Total de equipamentos:</strong> 
+                    <span th:text="${#lists.size(equipamentos)}">0</span>
+                </div>
+            </fieldset>
+        </div>
+        
+        <div th:if="${equipamentos == null || equipamentos.empty}" class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Esta unidade não possui equipamentos cadastrados.
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a th:href="@{/cadastroEquipamento}" class="btn">
+                <i class="fas fa-plus"></i> Cadastrar Novo Equipamento nesta Unidade
+            </a>
+        </div>
     </div>
 </main>
 
@@ -107,3 +99,4 @@
 
 </body>
 </html>
+

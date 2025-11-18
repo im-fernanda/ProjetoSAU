@@ -7,7 +7,6 @@ import com.projetosau.service.ComarcaService;
 import com.projetosau.service.RegionalService;
 import com.projetosau.service.UnidadeService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +23,6 @@ public class UnidadeController {
     private final ComarcaService comarcaService;
     private final RegionalService regionalService;
 
-    @Autowired
     public UnidadeController(UnidadeService unidadeService, ComarcaService comarcaService, RegionalService regionalService) {
         this.unidadeService = unidadeService;
         this.comarcaService = comarcaService;

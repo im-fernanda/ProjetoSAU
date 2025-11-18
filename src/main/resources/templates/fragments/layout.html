@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Gerenciador SAU'">Gerenciador SAU</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Header Institucional -->
+<header class="mp-header">
+    <div class="mp-header-content">
+        <div class="mp-logo-container">
+            <img th:src="@{/images/logo.png}" alt="Logo Ministério Público" class="mp-logo" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display: none;">
+                <div class="mp-header-title">
+                    <h1>Ministério Público</h1>
+                    <span class="subtitle">Gerenciador de Equipamentos - SAU</span>
+                </div>
+            </div>
+        </div>
+        <div class="mp-header-title" th:if="${title}">
+            <h1 th:text="${title}">Gerenciador SAU</h1>
+            <span class="subtitle">Sistema de Atendimento Universitário</span>
+        </div>
+        <nav class="mp-nav">
+            <a href="/" class="mp-nav-link"><i class="fas fa-home"></i> Início</a>
+            <a href="/listarEquipamentos" class="mp-nav-link"><i class="fas fa-laptop"></i> Equipamentos</a>
+            <a href="/listarLocais" class="mp-nav-link"><i class="fas fa-map-marker-alt"></i> Locais</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Conteúdo Principal -->
+<main class="container">
+    <div class="content-card" layout:fragment="content">
+        <!-- Conteúdo será inserido aqui pelos templates filhos -->
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="mp-footer">
+    <p>&copy; 2024 Ministério Público do Rio Grande do Norte - MPRN | Sistema de Gerenciamento de Equipamentos</p>
+</footer>
+
+</body>
+</html>
+

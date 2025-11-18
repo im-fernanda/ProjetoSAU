@@ -3,64 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edição de Equipamento</title>
+    <title>Edição de Equipamento - Gerenciador SAU</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<div class="container">
-    <h1>Edição de Equipamento</h1>
 
-    <form method="post" th:action="@{/processUpdateEquipamento}" th:object="${equipamento}">
-        <fieldset>
+<!-- Header Institucional -->
+<div th:replace="~{fragments/header :: header('Edição de Equipamento')}"></div>
+
+<!-- Container Principal -->
+<main class="container">
+    <div class="content-card">
+        <h1><i class="fas fa-edit"></i> Editar Equipamento</h1>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+        </div>
+
+        <form method="post" th:action="@{/processUpdateEquipamento}" th:object="${equipamento}">
             <input type="hidden" name="id" th:field="*{id}"/>
 
-            <label for="tombo">Tombo</label>
-            <input type="text" id="tombo" name="tombo" th:field="*{tombo}" required>
+            <fieldset>
+                <legend><i class="fas fa-info-circle"></i> Informações do Equipamento</legend>
 
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" th:field="*{nome}" required>
+                <label for="tombo"><i class="fas fa-barcode"></i> Tombo <span style="color: red;">*</span></label>
+                <input type="text" id="tombo" name="tombo" th:field="*{tombo}" required>
 
-            <label for="modelo">Modelo</label>
-            <input type="text" id="modelo" name="modelo" th:field="*{modelo}" required>
+                <label for="nome"><i class="fas fa-tag"></i> Nome <span style="color: red;">*</span></label>
+                <input type="text" id="nome" name="nome" th:field="*{nome}" required>
 
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" name="descricao" th:field="*{descricao}"></textarea>
+                <label for="modelo"><i class="fas fa-cog"></i> Modelo <span style="color: red;">*</span></label>
+                <input type="text" id="modelo" name="modelo" th:field="*{modelo}" required>
 
-            <label for="equipamento-regional">Regional</label>
-            <select id="equipamento-regional" name="equipamento-regional" th:field="*{unidade.regional}" onchange="loadComarcas()" required>
-                <option value="">Selecione...</option>
-                <option th:each="regional : ${regionais}"
-                        th:value="${regional.id}"
-                        th:text="${regional.nome}"
-                        th:selected="${equipamento.unidade?.regional?.id == regional.id ? 'selected' : ''}">
-                </option>
-            </select>
+                <label for="descricao"><i class="fas fa-align-left"></i> Descrição</label>
+                <textarea id="descricao" name="descricao" th:field="*{descricao}"></textarea>
+            </fieldset>
 
-            <label for="equipamento-comarca">Comarca:</label>
-            <select id="equipamento-comarca" name="equipamento-comarca" th:field="*{unidade.comarca}" onchange="loadUnidades()" required>
-                <option value="">Selecione...</option>
-                <option th:each="comarca : ${comarcasPorRegional}"
-                        th:value="${comarca.id}"
-                        th:text="${comarca.nome}"
-                        th:selected="${equipamento.unidade?.comarca?.id == comarca.id ? 'selected' : ''}">
-                </option>
-            </select>
+            <fieldset>
+                <legend><i class="fas fa-map-marker-alt"></i> Localização</legend>
 
-            <label for="equipamento-unidade">Unidade:</label>
-            <select id="equipamento-unidade" name="equipamento-unidade" th:field="*{unidade.id}" required>
-                <option value="">Selecione...</option>
-                <option th:each="unidade : ${unidadesPorComarca}"
-                        th:value="${unidade.id}"
-                        th:text="${unidade.nome}"
-                        th:selected="${equipamento.unidade?.id == unidade.id ? 'selected' : ''}">
-                </option>
-            </select>
+                <label for="equipamento-regional"><i class="fas fa-map"></i> Regional <span style="color: red;">*</span></label>
+                <select id="equipamento-regional" name="equipamento-regional" th:field="*{unidade.regional}" 
+                        onchange="loadComarcas()" required>
+                    <option value="">Selecione um regional...</option>
+                    <option th:each="regional : ${regionais}"
+                            th:value="${regional.id}"
+                            th:text="${regional.nome}"
+                            th:selected="${equipamento.unidade?.regional?.id == regional.id ? 'selected' : ''}">
+                    </option>
+                </select>
 
-            <button type="submit" name="action" value="save">Salvar</button>
-            <button type="submit" name="action" value="goToEquipamentos">Salvar e Ver Todos</button>
-        </fieldset>
-    </form>
-</div>
+                <label for="equipamento-comarca"><i class="fas fa-gavel"></i> Comarca <span style="color: red;">*</span></label>
+                <select id="equipamento-comarca" name="equipamento-comarca" th:field="*{unidade.comarca}" 
+                        onchange="loadUnidades()" required>
+                    <option value="">Selecione uma comarca...</option>
+                    <option th:each="comarca : ${comarcasPorRegional}"
+                            th:value="${comarca.id}"
+                            th:text="${comarca.nome}"
+                            th:selected="${equipamento.unidade?.comarca?.id == comarca.id ? 'selected' : ''}">
+                    </option>
+                </select>
+
+                <label for="equipamento-unidade"><i class="fas fa-building"></i> Unidade <span style="color: red;">*</span></label>
+                <select id="equipamento-unidade" name="equipamento-unidade" th:field="*{unidade.id}" required>
+                    <option value="">Selecione uma unidade...</option>
+                    <option th:each="unidade : ${unidadesPorComarca}"
+                            th:value="${unidade.id}"
+                            th:text="${unidade.nome}"
+                            th:selected="${equipamento.unidade?.id == unidade.id ? 'selected' : ''}">
+                    </option>
+                </select>
+            </fieldset>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="submit" name="action" value="save" class="btn">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+                <button type="submit" name="action" value="goToEquipamentos" class="btn btn-success">
+                    <i class="fas fa-check"></i> Salvar e Ver Todos
+                </button>
+                <a href="/listarEquipamentos" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 <script src="/js/cadastroEquipamento.js" defer></script>
 

@@ -11,8 +11,12 @@ RUN mvn dependency:go-offline -B || true
 # Copy source code
 COPY src ./src
 
-# Build application (skip tests for faster build)
-RUN mvn package -DskipTests -B
+# Build application with optimizations (skip tests, no docs, parallel build)
+RUN mvn package -DskipTests -B -T 1C \
+    -Dmaven.compile.fork=true \
+    -Dmaven.javadoc.skip=true \
+    -Dmaven.source.skip=true \
+    -Dmaven.test.skip=true
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jre-alpine
@@ -39,12 +43,6 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
   CMD curl -f http://localhost:8080/ || exit 1
 
-# Run application with optimized JVM settings for containers
-ENTRYPOINT ["java", \
-    "-XX:+UseContainerSupport", \
-    "-XX:MaxRAMPercentage=75.0", \
-    "-XX:+ExitOnOutOfMemoryError", \
-    "-Djava.security.egd=file:/dev/./urandom", \
-    "-jar", \
-    "app.jar"]
+# Run application with optimized JVM settings for containers (startup otimizado)
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
 

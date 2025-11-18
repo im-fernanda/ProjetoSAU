@@ -4,7 +4,6 @@ import com.projetosau.domain.Comarca;
 import com.projetosau.domain.Regional;
 import com.projetosau.repository.ComarcaRepository;
 import com.projetosau.repository.RegionalRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class ComarcaService {
     private final ComarcaRepository repository;
     private final RegionalRepository regionalRepository;
 
-    @Autowired
     public ComarcaService(ComarcaRepository repository, RegionalRepository regionalRepository) {
         this.repository = repository;
         this.regionalRepository = regionalRepository;

@@ -3,22 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edição de Unidade</title>
+    <title>Edição de Unidade - Gerenciador SAU</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<div class="container">
-    <h1>Edição de Unidade</h1>
 
-    <form method="post" th:action="@{/processUpdateUnidade}">
-        <input type="hidden" name="id" th:value="${unidade.id}"/>
+<!-- Header Institucional -->
+<div th:replace="~{fragments/header :: header('Edição de Unidade')}"></div>
 
-        <label for="nome">Novo nome da Unidade:</label>
-        <input type="text" id="nome" name="nome" th:value="${unidade.nome}" required>
+<!-- Container Principal -->
+<main class="container">
+    <div class="content-card">
+        <h1><i class="fas fa-edit"></i> Editar Unidade</h1>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+        </div>
 
-        <!-- Botões para ações -->
-        <button type="submit" name="action" value="goToUnidades">Salvar</button>
-    </form>
-</div>
+        <form method="post" th:action="@{/processUpdateUnidade}">
+            <input type="hidden" name="id" th:value="${unidade.id}"/>
+
+            <fieldset>
+                <legend><i class="fas fa-info-circle"></i> Informações da Unidade</legend>
+
+                <label for="nome"><i class="fas fa-building"></i> Novo Nome da Unidade <span style="color: red;">*</span></label>
+                <input type="text" id="nome" name="nome" th:value="${unidade.nome}" 
+                       required placeholder="Digite o novo nome da unidade">
+            </fieldset>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="submit" name="action" value="goToUnidades" class="btn">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+                <a href="/listarLocais" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

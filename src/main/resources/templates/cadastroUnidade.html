@@ -3,48 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Unidade</title>
+    <title>Cadastro de Unidade - Gerenciador SAU</title>
     <link rel="stylesheet" href="/styles.css">
-
-    <script src="/js/cadastroUnidade.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<div class="container">
-    <h1>Cadastro de Unidade</h1>
 
-    <form id="unidadeForm" method="post" th:action="@{/processSaveUnidade}" th:object="${unidade}">
-        <fieldset>
+<!-- Header Institucional -->
+<div th:replace="~{fragments/header :: header('Cadastro de Unidade')}"></div>
 
-            <label for="comarca-regional">Selecione o Regional</label>
-            <select id="comarca-regional" name="regional" th:field="*{regional}" onchange="loadComarcas()" required>
-                <option value="">Selecione...</option>
-                <option th:each="regional : ${regionais}"
-                        th:value="${regional.id}"
-                        th:text="${regional.nome}"
-                        th:selected="${unidade.regional != null && unidade.regional.id == regional.id ? 'selected' : ''}">
-                </option>
-            </select>
+<!-- Container Principal -->
+<main class="container">
+    <div class="content-card">
+        <h1><i class="fas fa-plus-circle"></i> Cadastro de Unidade</h1>
+        
+        <!-- Mensagens de alerta -->
+        <div th:if="${msg}" class="alert" th:classappend="${error == 'true' ? 'alert-danger' : 'alert-success'}" role="alert">
+            <i th:class="${error == 'true' ? 'fas fa-exclamation-circle' : 'fas fa-check-circle'}"></i>
+            <span th:text="${msg}"></span>
+        </div>
 
-            <div>
-                <label for="comarca">Comarca:</label>
+        <form id="unidadeForm" method="post" th:action="@{/processSaveUnidade}" th:object="${unidade}">
+            <fieldset>
+                <legend><i class="fas fa-info-circle"></i> Informações da Unidade</legend>
+
+                <label for="comarca-regional"><i class="fas fa-map"></i> Regional <span style="color: red;">*</span></label>
+                <select id="comarca-regional" name="regional" th:field="*{regional}" onchange="loadComarcas()" required>
+                    <option value="">Selecione um regional...</option>
+                    <option th:each="regional : ${regionais}"
+                            th:value="${regional.id}"
+                            th:text="${regional.nome}"
+                            th:selected="${unidade.regional != null && unidade.regional.id == regional.id ? 'selected' : ''}">
+                    </option>
+                </select>
+
+                <label for="comarca"><i class="fas fa-gavel"></i> Comarca <span style="color: red;">*</span></label>
                 <select id="comarca" name="comarca" th:field="*{comarca}" required>
-                    <option value="">Selecione...</option>
+                    <option value="">Primeiro selecione um regional...</option>
                     <option th:each="comarca : ${comarcas}"
                             th:value="${comarca.id}"
                             th:text="${comarca.nome}"
                             th:selected="${unidade.comarca != null && unidade.comarca.id == comarca.id ? 'selected' : ''}">
                     </option>
                 </select>
+
+                <label for="nome"><i class="fas fa-building"></i> Nome da Unidade <span style="color: red;">*</span></label>
+                <input type="text" id="nome" name="nome" th:field="*{nome}" 
+                       required placeholder="Digite o nome da unidade">
+            </fieldset>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="submit" name="action" value="save" class="btn">
+                    <i class="fas fa-save"></i> Salvar e Permanecer
+                </button>
+                <button type="submit" name="action" value="viewAll" class="btn btn-success">
+                    <i class="fas fa-check"></i> Salvar e Ver Todos
+                </button>
+                <a href="/listarLocais" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
             </div>
+        </form>
+    </div>
+</main>
 
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" th:field="*{nome}" required>
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-            <!-- Botões para ações -->
-            <button type="submit" name="action" value="save">Salvar</button>
-            <button type="submit" name="action" value="viewAll">Salvar e Ver Todos</button>
-        </fieldset>
-    </form>
-</div>
+<script src="/js/cadastroUnidade.js" defer></script>
+
 </body>
 </html>

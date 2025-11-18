@@ -17,3 +17,6 @@ README-DOCKER.md
 *.ear
 hs_err_pid*
 replay_pid*
+# Ignora arquivos de build do Spring Boot
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties

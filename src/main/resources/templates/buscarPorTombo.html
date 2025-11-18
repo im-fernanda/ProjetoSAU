@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar por Tombo - Gerenciador SAU</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Header Institucional -->
+<div th:replace="~{fragments/header :: header('Buscar Equipamento por Tombo')}"></div>
+
+<!-- Container Principal -->
+<main class="container">
+    <div class="content-card">
+        <h1><i class="fas fa-search"></i> Buscar Equipamento por Tombo</h1>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+        </div>
+
+        <form th:action="@{/listarPorTombo/{tombo}}" method="get">
+            <fieldset>
+                <legend><i class="fas fa-barcode"></i> Informe o Tombo</legend>
+                
+                <label for="tombo"><i class="fas fa-barcode"></i> Número do Tombo <span style="color: red;">*</span></label>
+                <input type="number" 
+                       id="tombo" 
+                       name="tombo" 
+                       th:value="${tombo}"
+                       required 
+                       placeholder="Digite o número do tombo"
+                       min="1">
+            </fieldset>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="submit" class="btn">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+                <a href="/listarEquipamentos" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: var(--mp-light); border-radius: 4px;">
+            <p><i class="fas fa-info-circle"></i> <strong>Dica:</strong> O tombo é o número único de identificação do equipamento.</p>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const tomboInput = document.getElementById('tombo');
+    
+    form.addEventListener('submit', function(e) {
+        const tombo = tomboInput.value;
+        if (tombo) {
+            form.action = '/listarPorTombo/' + tombo;
+        }
+    });
+});
+</script>
+
+</body>
+</html>
+

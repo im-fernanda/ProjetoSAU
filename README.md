@@ -137,9 +137,12 @@ Se algo não estiver funcionando, aqui estão algumas soluções comuns:
 | <kbd> POST /cadastrarEquipamento</kbd> | acesso à cadastro de equipamento (necessário associar a um local)
 | <kbd> POST /editarEquipamento</kbd> | acesso à página de edição dos detalhes de um equipamento já cadastrado (NÃO utilizar para transferência de locais)
 | <kbd> POST /deletarEquipamento</kbd> | deletar permanentemente o equipamento do banco de dados
-| <kbd> POST /cadastrarTransferencia</kbd> | acesso à registro de transfêrencia de equipamento para outro local  --- NOT READY
-| <kbd> GET /listarPorTombo</kbd> | acesso aos detalhes do equipamento (detalhes e histórico de transferência) --- NOT READY
-| <kbd> GET /listarPorNome</kbd> | acesso à listagem de equipamentos que possuem o mesmo nome (ex.: computador, impressora) --- NOT READY
-| <kbd> GET /listarPorLocal</kbd> | acesso à listagem de equipamentos disponíveis em um local especifico --- NOT READY
+| <kbd> GET /cadastrarTransferencia/{id}</kbd> | acesso à página de transferência de equipamento para outra unidade
+| <kbd> POST /processTransferencia</kbd> | processa a transferência de equipamento para outra unidade
+| <kbd> GET /listarPorTombo</kbd> | formulário para buscar equipamento por tombo
+| <kbd> GET /listarPorTombo/{tombo}</kbd> | acesso aos detalhes do equipamento pelo tombo
+| <kbd> GET /listarPorNome</kbd> | formulário para buscar equipamentos por nome
+| <kbd> GET /listarPorNome/resultado</kbd> | listagem de equipamentos que possuem o mesmo nome (ex.: computador, impressora)
+| <kbd> GET /listarPorLocal/{unidadeId}</kbd> | acesso à listagem de equipamentos disponíveis em uma unidade específica (clique no nome da unidade)
 
 

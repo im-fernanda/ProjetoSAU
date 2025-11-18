@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Equipamento - Gerenciador SAU</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Header Institucional -->
+<div th:replace="~{fragments/header :: header('Detalhes do Equipamento')}"></div>
+
+<!-- Container Principal -->
+<main class="container">
+    <div class="content-card" th:if="${equipamento}">
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/listarEquipamentos" class="btn btn-secondary" style="margin-bottom: 1rem;">
+                <i class="fas fa-arrow-left"></i> Voltar para Lista
+            </a>
+        </div>
+
+        <h1><i class="fas fa-info-circle"></i> Detalhes do Equipamento</h1>
+        
+        <fieldset>
+            <legend><i class="fas fa-laptop"></i> Informações do Equipamento</legend>
+            
+            <table style="width: 100%; border: none;">
+                <tbody>
+                    <tr>
+                        <td style="width: 200px; font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-barcode"></i> Tombo:</td>
+                        <td style="padding: 0.75rem 0;" th:text="${equipamento.tombo}">-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-tag"></i> Nome:</td>
+                        <td style="padding: 0.75rem 0;" th:text="${equipamento.nome}">-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-cog"></i> Modelo:</td>
+                        <td style="padding: 0.75rem 0;" th:text="${equipamento.modelo}">-</td>
+                    </tr>
+                    <tr th:if="${equipamento.descricao != null && !equipamento.descricao.isEmpty()}">
+                        <td style="font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-align-left"></i> Descrição:</td>
+                        <td style="padding: 0.75rem 0;" th:text="${equipamento.descricao}">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend><i class="fas fa-map-marker-alt"></i> Localização Atual</legend>
+            
+            <table style="width: 100%; border: none;">
+                <tbody>
+                    <tr>
+                        <td style="width: 200px; font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-building"></i> Unidade:</td>
+                        <td style="padding: 0.75rem 0;">
+                            <a th:href="@{/listarPorLocal/{id}(id=${equipamento.unidade.id})}" 
+                               style="color: var(--mp-primary); text-decoration: none;"
+                               th:text="${equipamento.unidade.nome}">-</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-gavel"></i> Comarca:</td>
+                        <td style="padding: 0.75rem 0;" th:text="${equipamento.unidade.comarca.nome}">-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; padding: 0.75rem 0;"><i class="fas fa-map"></i> Regional:</td>
+                        <td style="padding: 0.75rem 0;" th:text="${equipamento.unidade.comarca.regional.nome}">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a th:href="@{/editarEquipamento/{id}(id=${equipamento.id})}" class="btn">
+                <i class="fas fa-edit"></i> Editar Equipamento
+            </a>
+            <a th:href="@{/cadastrarTransferencia/{id}(id=${equipamento.id})}" class="btn btn-secondary">
+                <i class="fas fa-exchange-alt"></i> Transferir para Outra Unidade
+            </a>
+            <a th:href="@{/listarPorLocal/{id}(id=${equipamento.unidade.id})}" class="btn btn-secondary">
+                <i class="fas fa-building"></i> Ver Outros Equipamentos desta Unidade
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
+

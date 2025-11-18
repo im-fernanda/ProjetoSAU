@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar por Nome - Gerenciador SAU</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Header Institucional -->
+<div th:replace="~{fragments/header :: header('Buscar Equipamentos por Nome')}"></div>
+
+<!-- Container Principal -->
+<main class="container">
+    <div class="content-card">
+        <h1><i class="fas fa-search"></i> Buscar Equipamentos por Nome</h1>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+        </div>
+
+        <form th:action="@{/listarPorNome/resultado}" method="get">
+            <fieldset>
+                <legend><i class="fas fa-tag"></i> Informe o Nome</legend>
+                
+                <label for="nome"><i class="fas fa-tag"></i> Nome do Equipamento <span style="color: red;">*</span></label>
+                <input type="text" 
+                       id="nome" 
+                       name="nome" 
+                       required 
+                       placeholder="Ex: Computador, Impressora, Monitor..."
+                       autocomplete="off">
+            </fieldset>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="submit" class="btn">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+                <a href="/listarEquipamentos" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: var(--mp-light); border-radius: 4px;">
+            <p><i class="fas fa-info-circle"></i> <strong>Dica:</strong> A busca retornará todos os equipamentos cujo nome contenha o termo informado.</p>
+            <p style="margin-top: 0.5rem;"><strong>Exemplos:</strong> "computador", "impressora", "monitor", etc.</p>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
+

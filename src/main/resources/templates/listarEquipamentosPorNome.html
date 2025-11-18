@@ -3,39 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Equipamentos - Gerenciador SAU</title>
+    <title>Resultado da Busca - Gerenciador SAU</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
 <!-- Header Institucional -->
-<div th:replace="~{fragments/header :: header('Gerenciador de Equipamentos')}"></div>
+<div th:replace="~{fragments/header :: header('Resultado da Busca')}"></div>
 
 <!-- Container Principal -->
 <main class="container">
     <div class="content-card">
-        <h1><i class="fas fa-laptop"></i> Equipamentos Cadastrados</h1>
-        
-        <!-- Mensagem de sucesso, se houver -->
-        <div th:if="${msg}" class="alert alert-success" role="alert">
-            <i class="fas fa-check-circle"></i> <span th:text="${msg}"></span>
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/listarPorNome" class="btn btn-secondary" style="margin-bottom: 1rem;">
+                <i class="fas fa-arrow-left"></i> Nova Busca
+            </a>
         </div>
 
-        <div th:if="${success}" class="alert alert-success" role="alert">
-            <i class="fas fa-check-circle"></i> Operação realizada com sucesso!
-        </div>
+        <h1><i class="fas fa-search"></i> Resultado da Busca</h1>
+        <h3 th:if="${nomeBusca}">
+            Buscando por: "<strong th:text="${nomeBusca}"></strong>"
+        </h3>
 
-        <div style="margin: 2rem 0; display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="/cadastroEquipamento" class="btn"><i class="fas fa-plus"></i> Cadastrar Novo Equipamento</a>
-            <a href="/listarPorTombo" class="btn btn-secondary"><i class="fas fa-search"></i> Buscar por Tombo</a>
-            <a href="/listarPorNome" class="btn btn-secondary"><i class="fas fa-search"></i> Buscar por Nome</a>
-        </div>
+        <div th:if="${equipamentos != null && !equipamentos.empty}">
+            <div class="alert alert-info" style="margin-bottom: 1.5rem;">
+                <i class="fas fa-info-circle"></i> 
+                <strong th:text="${#lists.size(equipamentos)}">0</strong> equipamento(s) encontrado(s).
+            </div>
 
-        <fieldset>
-            <legend><i class="fas fa-list"></i> Listagem de Equipamentos</legend>
-            
-            <div th:if="${equipamentos != null && !equipamentos.empty}">
+            <fieldset>
+                <legend><i class="fas fa-list"></i> Equipamentos Encontrados</legend>
+                
                 <table>
                     <thead>
                         <tr>
@@ -51,7 +50,7 @@
                         <tr th:each="equipamento : ${equipamentos}">
                             <td>
                                 <a th:href="@{/listarPorTombo/{tombo}(tombo=${equipamento.tombo})}" 
-                                   style="color: var(--mp-primary); text-decoration: none; font-weight: 500;"
+                                   style="color: var(--mp-primary); text-decoration: none;"
                                    th:text="${equipamento.tombo}">Tombo</a>
                             </td>
                             <td th:text="${equipamento.nome}">Nome</td>
@@ -64,41 +63,33 @@
                             </td>
                             <td>
                                 <div class="action-btns">
+                                    <a th:href="@{/editarEquipamento/{id}(id=${equipamento.id})}" 
+                                       class="action-btn" 
+                                       title="Editar Equipamento">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                     <a th:href="@{/listarPorTombo/{tombo}(tombo=${equipamento.tombo})}" 
                                        class="action-btn" 
                                        title="Ver Detalhes"
                                        style="color: var(--mp-secondary);">
                                         <i class="fas fa-info-circle"></i>
                                     </a>
-                                    <a th:href="@{/editarEquipamento/{id}(id=${equipamento.id})}" 
-                                       class="action-btn" 
-                                       title="Editar Equipamento">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a th:href="@{/cadastrarTransferencia/{id}(id=${equipamento.id})}" 
-                                       class="action-btn" 
-                                       title="Transferir Equipamento"
-                                       style="color: var(--mp-secondary);">
-                                        <i class="fas fa-exchange-alt"></i>
-                                    </a>
-                                    <a th:href="@{/deletarEquipamento/{id}(id=${equipamento.id})}" 
-                                       class="action-btn" 
-                                       title="Excluir Equipamento"
-                                       onclick="return confirm('Tem certeza que deseja excluir este equipamento?');">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            </fieldset>
+        </div>
+        
+        <div th:if="${equipamentos == null || equipamentos.empty}" class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i> Nenhum equipamento encontrado com o nome "<strong th:text="${nomeBusca}"></strong>".
+            <div style="margin-top: 1rem;">
+                <a href="/listarPorNome" class="btn btn-secondary">
+                    <i class="fas fa-search"></i> Tentar Nova Busca
+                </a>
             </div>
-            
-            <div th:if="${equipamentos == null || equipamentos.empty}" class="alert alert-info">
-                <i class="fas fa-info-circle"></i> Nenhum equipamento cadastrado ainda. 
-                <a href="/cadastroEquipamento" style="color: inherit; text-decoration: underline;">Clique aqui para cadastrar o primeiro.</a>
-            </div>
-        </fieldset>
+        </div>
     </div>
 </main>
 
@@ -107,3 +98,4 @@
 
 </body>
 </html>
+
