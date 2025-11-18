@@ -70,17 +70,31 @@ body {
 
 .mp-logo-text {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     margin-left: 0.5rem;
+    line-height: 1.2;
 }
 
-.mp-logo-text h2 {
+.mp-logo-text-line1 {
     color: white;
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin: 0;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+.mp-logo-text-line2 {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    margin-top: 0.1rem;
+    letter-spacing: 0.02em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
 }
 
 .mp-header-title {
